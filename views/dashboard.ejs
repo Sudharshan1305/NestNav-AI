@@ -1,0 +1,726 @@
+<%- include('partials/header') %>
+    <%- include('partials/navbar') %>
+
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h1 class="display-6 fw-bold text-primary">Find Your Perfect Neighborhood with NestNav AI
+                            </h1>
+                            <p class="text-muted mb-0">Welcome back, <%= user.username %>! Let's find your ideal
+                                    location in Chennai.</p>
+                        </div>
+                        <div>
+                            <a href="/history" class="btn btn-outline-primary">
+                                <i class="fas fa-history me-1"></i>View History
+                            </a>
+                        </div>
+                        <div class="text-end mb-4">
+                            <a href="/dashboard/forecast" class="btn btn-outline-primary">
+                                📊 View Price Forecast
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Messages -->
+            <% if (typeof query !=='undefined' && query.error) { %>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <% if (query.error==='missing_fields' ) { %>
+                                Please fill in all required fields.
+                                <% } else if (query.error==='duplicate_preferences' ) { %>
+                                    Please select 3 different preferences.
+                                    <% } else if (query.error==='calculation_error' ) { %>
+                                        Error processing your request. Please try again.
+                                        <% } else { %>
+                                            An error occurred. Please try again.
+                                            <% } %>
+                                                <button type="button" class="btn-close"
+                                                    data-bs-dismiss="alert"></button>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-primary text-white">
+                                    <h4 class="mb-0">
+                                        <i class="fas fa-sliders-h me-2"></i>Recommendation Settings
+                                    </h4>
+                                </div>
+                                <div class="card-body p-4">
+                                    <form action="/dashboard/recommend" method="POST" id="recommendationForm">
+                                        <!-- Area Selection -->
+                                        <div class="mb-4">
+                                            <label for="selectedArea" class="form-label fw-bold">
+                                                <i class="fas fa-map-marker-alt text-primary me-2"></i>Target Area
+                                            </label>
+                                            <select class="form-select form-select-lg" id="selectedArea"
+                                                name="selectedArea" required>
+                                                <option value="">Choose your preferred area...</option>
+                                                <% areas.forEach(area=> { %>
+                                                    <option value="<%= area %>">
+                                                        <%= area %>
+                                                    </option>
+                                                    <% }); %>
+                                            </select>
+                                            <div class="form-text">
+                                                <i class="fas fa-info-circle me-1"></i>
+                                                We'll recommend similar areas in the same zone based on your selection.
+                                            </div>
+                                        </div>
+
+                                        <!-- Budget Input -->
+                                        <div class="mb-4">
+                                            <label for="budget" class="form-label fw-bold">
+                                                <i class="fas fa-rupee-sign text-success me-2"></i>Budget (Cost Score
+                                                1-10)
+                                            </label>
+                                            <div class="input-group input-group-lg">
+                                                <input type="number" class="form-control" id="budget" name="budget"
+                                                    placeholder="Enter budget score (1-10)" min="1" max="10" step="0.1">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-calculator"></i>
+                                                </span>
+                                            </div>
+                                            <div class="form-text">
+                                                <i class="fas fa-lightbulb me-1"></i>
+                                                Optional: Higher score means higher budget tolerance. Leave blank to see
+                                                all options.
+                                            </div>
+                                        </div>
+
+                                        <!-- Preferences Section -->
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold mb-3">
+                                                <i class="fas fa-star text-warning me-2"></i>Your Top 3 Priorities
+                                            </label>
+
+                                            <div class="row g-3">
+                                                <div class="col-md-4">
+                                                    <label for="preference1" class="form-label">
+                                                        <span class="badge bg-primary me-2">1st</span>Most Important
+                                                    </label>
+                                                    <select class="form-select" id="preference1" name="preference1"
+                                                        required>
+                                                        <option value="">Select priority...</option>
+                                                        <% parameterOptions.forEach(param=> { %>
+                                                            <option value="<%= param %>">
+                                                                <%= param.replace('Score', ''
+                                                                    ).replace(/([A-Z])/g, ' $1' ).trim() %>
+                                                            </option>
+                                                            <% }); %>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label for="preference2" class="form-label">
+                                                        <span class="badge bg-secondary me-2">2nd</span>Second Priority
+                                                    </label>
+                                                    <select class="form-select" id="preference2" name="preference2"
+                                                        required>
+                                                        <option value="">Select priority...</option>
+                                                        <% parameterOptions.forEach(param=> { %>
+                                                            <option value="<%= param %>">
+                                                                <%= param.replace('Score', ''
+                                                                    ).replace(/([A-Z])/g, ' $1' ).trim() %>
+                                                            </option>
+                                                            <% }); %>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label for="preference3" class="form-label">
+                                                        <span class="badge bg-info me-2">3rd</span>Third Priority
+                                                    </label>
+                                                    <select class="form-select" id="preference3" name="preference3"
+                                                        required>
+                                                        <option value="">Select priority...</option>
+                                                        <% parameterOptions.forEach(param=> { %>
+                                                            <option value="<%= param %>">
+                                                                <%= param.replace('Score', ''
+                                                                    ).replace(/([A-Z])/g, ' $1' ).trim() %>
+                                                            </option>
+                                                            <% }); %>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-text mt-2">
+                                                <i class="fas fa-exclamation-circle me-1"></i>
+                                                Please select 3 different priorities. These will be weighted in your
+                                                recommendations.
+                                            </div>
+                                        </div>
+
+                                        <!-- Submit Button -->
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                                <i class="fas fa-search me-2"></i>Get Recommendations
+                                                <span class="spinner-border spinner-border-sm ms-2 d-none"
+                                                    id="loadingSpinner"></span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <!-- Tips Card -->
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-lightbulb me-2"></i>Tips for Better Recommendations
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-3">
+                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                            <strong>Area Selection:</strong> Choose an area you're familiar with or
+                                            interested in
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                            <strong>Budget:</strong> Higher scores indicate tolerance for higher costs
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                            <strong>Priorities:</strong> Focus on what matters most to your lifestyle
+                                        </li>
+                                        <li class="mb-0">
+                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                            <strong>Zone Matching:</strong> We'll show areas in the same zone for
+                                            consistency
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Parameter Explanation -->
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-info-circle me-2"></i>Parameter Guide
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="accordion accordion-flush" id="parameterAccordion">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="infrastructure">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseInfra">
+                                                    Infrastructure
+                                                </button>
+                                            </h2>
+                                            <div id="collapseInfra" class="accordion-collapse collapse"
+                                                data-bs-parent="#parameterAccordion">
+                                                <div class="accordion-body">
+                                                    <small>
+                                                        <strong>Hospital:</strong> Proximity to medical facilities<br>
+                                                        <strong>College:</strong> Educational institutions nearby<br>
+                                                        <strong>Power:</strong> Electricity reliability<br>
+                                                        <strong>Services:</strong> Basic amenities availability
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="lifestyle">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseLifestyle">
+                                                    Lifestyle
+                                                </button>
+                                            </h2>
+                                            <div id="collapseLifestyle" class="accordion-collapse collapse"
+                                                data-bs-parent="#parameterAccordion">
+                                                <div class="accordion-body">
+                                                    <small>
+                                                        <strong>Mall:</strong> Shopping and entertainment<br>
+                                                        <strong>Connectivity:</strong> Transport links<br>
+                                                        <strong>Residential:</strong> Family-friendly environment<br>
+                                                        <strong>Safety:</strong> Low crime rates
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chennai Overview Charts Section -->
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <h3 class="mb-3">
+                                <i class="fas fa-chart-bar me-2 text-primary"></i>Chennai Neighborhoods Overview
+                            </h3>
+                            <p class="text-muted">Explore neighborhood data and trends across Chennai zones</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Zone Distribution -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">
+                                        <i class="fas fa-map me-2"></i>Neighborhoods by Zone
+                                    </h5>
+                                    <button class="btn btn-sm btn-outline-primary"
+                                        onclick="exportChart('dashboardZoneChart', 'zone_distribution.png')">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div style="height: 300px; position: relative;">
+                                        <canvas id="dashboardZoneChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Average Scores by Zone -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">
+                                        <i class="fas fa-star me-2"></i>Average Scores by Zone
+                                    </h5>
+                                    <button class="btn btn-sm btn-outline-primary"
+                                        onclick="exportChart('dashboardScoreChart', 'zone_scores.png')">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div style="height: 300px; position: relative;">
+                                        <canvas id="dashboardScoreChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Budget Analysis -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">
+                                        <i class="fas fa-rupee-sign me-2"></i>Budget Distribution
+                                    </h5>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown">
+                                            BHK Type
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="updateBudgetChart('1BHK')">1BHK</a></li>
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="updateBudgetChart('2BHK')">2BHK</a></li>
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="updateBudgetChart('3BHK')">3BHK</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div style="height: 300px; position: relative;">
+                                        <canvas id="dashboardBudgetChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transport Connectivity -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-light">
+                                    <h5 class="card-title mb-0">
+                                        <i class="fas fa-subway me-2"></i>Transport Connectivity
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div style="height: 300px; position: relative;">
+                                        <canvas id="dashboardTransportChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loading indicator for charts -->
+                    <div id="chartsLoading" class="row">
+                        <div class="col-12 text-center py-4">
+                            <div class="spinner-border text-primary me-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <span class="text-muted">Loading Chennai neighborhood data...</span>
+                        </div>
+                    </div>
+        </div>
+
+        <!-- Include Chart.js and Custom Visualization -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+        <script src="/js/dataVisualization.js"></script>
+
+        <script>
+            // Add this to your dashboard.ejs file - REPLACE THE EXISTING SCRIPT SECTION
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('recommendationForm');
+                const submitBtn = document.getElementById('submitBtn');
+                const loadingSpinner = document.getElementById('loadingSpinner');
+                const preferences = ['preference1', 'preference2', 'preference3'];
+
+
+
+
+                // Form validation
+                preferences.forEach(prefId => {
+                    document.getElementById(prefId).addEventListener('change', function () {
+                        validatePreferences();
+                    });
+                });
+
+                function validatePreferences() {
+                    const values = preferences.map(id => document.getElementById(id).value).filter(v => v);
+                    const duplicates = values.length !== new Set(values).size;
+
+                    if (duplicates && values.length > 1) {
+                        preferences.forEach(id => {
+                            const select = document.getElementById(id);
+                            if (values.filter(v => v === select.value).length > 1) {
+                                select.classList.add('is-invalid');
+                            } else {
+                                select.classList.remove('is-invalid');
+                            }
+                        });
+                    } else {
+                        preferences.forEach(id => {
+                            document.getElementById(id).classList.remove('is-invalid');
+                        });
+                    }
+                }
+
+                // Form submission loading state
+                if (form) {
+                    form.addEventListener('submit', function () {
+                        if (submitBtn) {
+                            submitBtn.disabled = true;
+                            if (loadingSpinner) loadingSpinner.classList.remove('d-none');
+                            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+                        }
+                    });
+                }
+
+                // Auto-populate from URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('area')) {
+                    const areaSelect = document.getElementById('selectedArea');
+                    if (areaSelect) areaSelect.value = urlParams.get('area');
+                }
+
+                // Initialize dashboard charts with proper error handling
+                setTimeout(() => {
+                    loadDashboardCharts();
+                }, 100);
+            });
+
+            // Dashboard Charts Functions with FIXED data handling
+            let dashboardData = [];
+
+            async function loadDashboardCharts() {
+                const chartsLoading = document.getElementById('chartsLoading');
+
+                try {
+                    console.log('Loading dashboard charts...');
+
+                    // Hide loading initially
+                    if (chartsLoading) {
+                        chartsLoading.style.display = 'none';
+                    }
+
+                    // Check if visualization module is loaded
+                    if (!window.nestnavViz) {
+                        console.error('Visualization module not loaded, creating fallback...');
+                        showChartError('Visualization module not available');
+                        return;
+                    }
+
+                    // Try to fetch real data first
+                    let neighborhoods = [];
+                    try {
+                        const response = await fetch('/api/neighborhoods/overview');
+                        const data = await response.json();
+
+                        if (data.success && data.neighborhoods && data.neighborhoods.length > 0) {
+                            neighborhoods = data.neighborhoods;
+                            console.log(`Loaded ${neighborhoods.length} neighborhoods from API`);
+                        } else {
+                            throw new Error('No data from API');
+                        }
+                    } catch (fetchError) {
+                        console.warn('API data not available, creating sample data:', fetchError);
+                        neighborhoods = generateSampleNeighborhoodData();
+                    }
+
+                    dashboardData = neighborhoods;
+
+                    // Create all dashboard charts with error handling
+                    try {
+                        createDashboardCharts(neighborhoods);
+                    } catch (chartError) {
+                        console.error('Error creating charts:', chartError);
+                        showChartError('Error creating visualizations');
+                    }
+
+                } catch (error) {
+                    console.error('Error loading dashboard charts:', error);
+                    showChartError('Unable to load charts at the moment');
+                }
+            }
+
+            function createDashboardCharts(neighborhoods) {
+                console.log('Creating dashboard charts with', neighborhoods.length, 'neighborhoods');
+
+                // 1. Zone Distribution Chart
+                try {
+                    if (document.getElementById('dashboardZoneChart')) {
+                        window.nestnavViz.createZoneDistribution('dashboardZoneChart', neighborhoods);
+                        console.log('Zone distribution chart created');
+                    }
+                } catch (error) {
+                    console.error('Error creating zone chart:', error);
+                }
+
+                // 2. Zone Scores Chart
+                try {
+                    if (document.getElementById('dashboardScoreChart')) {
+                        createZoneScoresChart(neighborhoods);
+                        console.log('Zone scores chart created');
+                    }
+                } catch (error) {
+                    console.error('Error creating scores chart:', error);
+                }
+
+                // 3. Budget Analysis Chart
+                try {
+                    if (document.getElementById('dashboardBudgetChart')) {
+                        window.nestnavViz.createBudgetAnalysis('dashboardBudgetChart', neighborhoods, {
+                            budget: 25000,
+                            bhkType: '2BHK'
+                        });
+                        console.log('Budget analysis chart created');
+                    }
+                } catch (error) {
+                    console.error('Error creating budget chart:', error);
+                }
+
+                // 4. Transport Chart
+                try {
+                    if (document.getElementById('dashboardTransportChart')) {
+                        window.nestnavViz.createTransportChart('dashboardTransportChart', neighborhoods);
+                        console.log('Transport chart created');
+                    }
+                } catch (error) {
+                    console.error('Error creating transport chart:', error);
+                }
+            }
+
+            function createZoneScoresChart(neighborhoods) {
+                const ctx = document.getElementById('dashboardScoreChart');
+                if (!ctx || !neighborhoods || neighborhoods.length === 0) return;
+
+                // Calculate average scores by zone
+                const zoneScores = {};
+                neighborhoods.forEach(n => {
+                    const zone = n.zone || n.Zone || 'Unknown';
+                    if (!zoneScores[zone]) {
+                        zoneScores[zone] = {
+                            safety: 0,
+                            connectivity: 0,
+                            amenities: 0,
+                            infrastructure: 0,
+                            count: 0
+                        };
+                    }
+
+                    zoneScores[zone].safety += n.safetyScore || 5;
+                    zoneScores[zone].connectivity += n.connectivityScore || 5;
+                    zoneScores[zone].amenities += n.amenitiesScore || 5;
+                    zoneScores[zone].infrastructure += n.infrastructureScore || 5;
+                    zoneScores[zone].count += 1;
+                });
+
+                const labels = Object.keys(zoneScores);
+                const datasets = [
+                    {
+                        label: 'Safety Score',
+                        data: labels.map(zone => (zoneScores[zone].safety / zoneScores[zone].count).toFixed(1)),
+                        backgroundColor: window.nestnavViz.colors.success + '80',
+                        borderColor: window.nestnavViz.colors.success,
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Connectivity',
+                        data: labels.map(zone => (zoneScores[zone].connectivity / zoneScores[zone].count).toFixed(1)),
+                        backgroundColor: window.nestnavViz.colors.primary + '80',
+                        borderColor: window.nestnavViz.colors.primary,
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Amenities',
+                        data: labels.map(zone => (zoneScores[zone].amenities / zoneScores[zone].count).toFixed(1)),
+                        backgroundColor: window.nestnavViz.colors.accent + '80',
+                        borderColor: window.nestnavViz.colors.accent,
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Infrastructure',
+                        data: labels.map(zone => (zoneScores[zone].infrastructure / zoneScores[zone].count).toFixed(1)),
+                        backgroundColor: window.nestnavViz.colors.info + '80',
+                        borderColor: window.nestnavViz.colors.info,
+                        borderWidth: 1
+                    }
+                ];
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 10,
+                                ticks: { stepSize: 2 },
+                                title: {
+                                    display: true,
+                                    text: 'Score (1-10)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: { position: 'top' },
+                            title: {
+                                display: true,
+                                text: 'Average Scores by Zone',
+                                font: { size: 16, weight: 'bold' }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return `${context.dataset.label}: ${context.parsed.y}/10`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Generate sample data if API fails
+            function generateSampleNeighborhoodData() {
+                console.log('Generating sample neighborhood data...');
+
+                const zones = ['North Chennai', 'South Chennai', 'Central Chennai', 'West Chennai', 'East Chennai'];
+                const neighborhoods = [];
+
+                zones.forEach(zone => {
+                    for (let i = 1; i <= 20; i++) {
+                        neighborhoods.push({
+                            name: `${zone} Area ${i}`,
+                            Location: `${zone} Area ${i}`,
+                            zone: zone,
+                            Zone: zone,
+                            safetyScore: Math.floor(Math.random() * 10) + 1,
+                            connectivityScore: Math.floor(Math.random() * 10) + 1,
+                            amenitiesScore: Math.floor(Math.random() * 10) + 1,
+                            infrastructureScore: Math.floor(Math.random() * 10) + 1,
+                            environmentScore: Math.floor(Math.random() * 10) + 1,
+                            lifestyleScore: Math.floor(Math.random() * 10) + 1,
+                            floodScore: Math.floor(Math.random() * 10) + 1,
+                            floodRisk: Math.random() > 0.6 ? 'Low' : Math.random() > 0.3 ? 'Medium' : 'High',
+                            avgRent1BHK: 12000 + Math.floor(Math.random() * 8000),
+                            avgRent2BHK: 20000 + Math.floor(Math.random() * 15000),
+                            avgRent3BHK: 30000 + Math.floor(Math.random() * 20000),
+                            metroAccess: Math.floor(Math.random() * 10) + 1,
+                            busConnectivity: Math.floor(Math.random() * 10) + 1,
+                            hospitalAccess: Math.floor(Math.random() * 10) + 1,
+                            schoolProximity: Math.floor(Math.random() * 10) + 1,
+                            shoppingCenters: Math.floor(Math.random() * 10) + 1,
+                            availablePlots: Math.floor(Math.random() * 50),
+                            crimeScore: Math.floor(Math.random() * 5) + 1
+                        });
+                    }
+                });
+
+                console.log(`Generated ${neighborhoods.length} sample neighborhoods`);
+                return neighborhoods;
+            }
+
+            function updateBudgetChart(bhkType) {
+                if (dashboardData.length > 0 && window.nestnavViz) {
+                    const budget = bhkType === '1BHK' ? 15000 : bhkType === '2BHK' ? 25000 : 35000;
+                    window.nestnavViz.createBudgetAnalysis('dashboardBudgetChart', dashboardData, {
+                        budget: budget,
+                        bhkType: bhkType
+                    });
+                    console.log(`Budget chart updated for ${bhkType}`);
+                }
+            }
+
+            function exportChart(chartId, filename) {
+                if (window.nestnavViz) {
+                    window.nestnavViz.exportChart(chartId, filename);
+                } else {
+                    alert('Chart export not available');
+                }
+            }
+
+            function showChartError(message) {
+                const chartsSection = document.querySelector('.row.mt-5');
+                if (chartsSection) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'col-12 text-center text-muted py-4';
+                    errorDiv.innerHTML = `
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                ${message}
+                <br><small>Sample data will be shown instead</small>
+            </div>
+        `;
+                    chartsSection.appendChild(errorDiv);
+                }
+            }
+
+            // Responsive chart resizing
+            window.addEventListener('resize', function () {
+                if (window.nestnavViz) {
+                    window.nestnavViz.resizeAllCharts();
+                }
+            });
+
+            // Debug: Log when scripts are loaded
+            console.log('Dashboard script loaded successfully');
+
+            // Make functions globally available
+            window.updateBudgetChart = updateBudgetChart;
+            window.exportChart = exportChart;
+        </script>
+
+        <%- include('partials/footer') %>

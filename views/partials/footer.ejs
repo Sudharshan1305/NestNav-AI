@@ -1,0 +1,49 @@
+<footer class="bg-dark text-light py-4 mt-auto">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5><i class="fas fa-home me-2"></i>NestNav AI</h5>
+                <p class="mb-0">Find your perfect neighborhood in Chennai with AI-powered recommendations.</p>
+            </div>
+            <div class="col-md-3">
+                <h6>Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-light text-decoration-none">Home</a></li>
+                    <% if (currentUser) { %>
+                        <li><a href="/dashboard" class="text-light text-decoration-none">Dashboard</a></li>
+                        <li><a href="/history" class="text-light text-decoration-none">History</a></li>
+                        <li><a href="/educational" class="text-light text-decoration-none">About Chennai</a></li>
+                        <% } else { %>
+                            <li><a href="/login" class="text-light text-decoration-none">Login</a></li>
+                            <li><a href="/register" class="text-light text-decoration-none">Register</a></li>
+                            <li><a href="/educational" class="text-light text-decoration-none">About Chennai</a></li>
+                            <% } %>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h6>Contact</h6>
+                <p class="mb-1"><i class="fas fa-envelope me-2"></i>support@nestnav.com</p>
+                <p class="mb-0"><i class="fas fa-phone me-2"></i>+91 9791742655</p>
+            </div>
+        </div>
+        <hr class="my-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="mb-0">&copy; <%= new Date().getFullYear() %> NestNav AI. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script src="/js/dataVisualization.js"></script>
+<script src="/js/formHandler.js"></script>
+<script src="/js/mapIntegration.js"></script>
+<script src="/js/recommendationEngine.js"></script>
+
+</body>
+
+</html>

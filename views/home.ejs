@@ -1,0 +1,168 @@
+<%- include('partials/header') %>
+    <%- include('partials/navbar') %>
+
+        <div class="hero-section bg-primary text-white py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="display-4 fw-bold mb-4">Find Your Perfect Neighborhood in Chennai</h1>
+                        <p class="lead mb-4">
+                            Discover the ideal place to call home with our AI-powered location recommendation system.
+                            Get personalized suggestions based on your preferences for amenities, budget, and lifestyle.
+                        </p>
+                        <% if (currentUser) { %>
+                            <a href="/dashboard" class="btn btn-light btn-lg me-3">
+                                <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+                            </a>
+                            <% } else { %>
+                                <a href="/register" class="btn btn-light btn-lg me-3">
+                                    <i class="fas fa-user-plus me-2"></i>Get Started
+                                </a>
+                                <a href="/login" class="btn btn-outline-light btn-lg">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                                </a>
+                                <% } %>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="/images/chennai-skyline.jpg" alt="Chennai Skyline" class="img-fluid rounded shadow">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-section py-5">
+            <div class="container">
+                <div class="row text-center mb-5">
+                    <div class="col-12">
+                        <h2 class="display-5 fw-bold mb-3">Why Choose NestNav AI?</h2>
+                        <p class="lead text-muted">Intelligent recommendations tailored to your lifestyle and
+                            preferences</p>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon bg-primary text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="fas fa-brain fa-lg"></i>
+                                </div>
+                                <h4 class="card-title">AI-Powered Recommendations</h4>
+                                <p class="card-text text-muted">
+                                    Advanced algorithms analyze multiple factors to suggest the best neighborhoods that
+                                    match your preferences.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon bg-success text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="fas fa-map-marked-alt fa-lg"></i>
+                                </div>
+                                <h4 class="card-title">Comprehensive Area Analysis</h4>
+                                <p class="card-text text-muted">
+                                    Detailed insights on connectivity, amenities, safety, cost of living, and more for
+                                    150+ Chennai localities.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon bg-info text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="fas fa-user-cog fa-lg"></i>
+                                </div>
+                                <h4 class="card-title">Personalized Experience</h4>
+                                <p class="card-text text-muted">
+                                    Set your priorities and budget to get recommendations that truly fit your lifestyle
+                                    and needs.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="how-it-works-section bg-light py-5">
+            <div class="container">
+                <div class="row text-center mb-5">
+                    <div class="col-12">
+                        <h2 class="display-5 fw-bold mb-3">How It Works</h2>
+                        <p class="lead text-muted">Simple steps to find your perfect neighborhood</p>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-3 text-center">
+                        <div class="step-number bg-primary text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center"
+                            style="width: 50px; height: 50px;">
+                            <span class="fw-bold">1</span>
+                        </div>
+                        <h5>Select Your Preferred Area</h5>
+                        <p class="text-muted">Choose a locality you're interested in or let us recommend based on your
+                            zone preference.</p>
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <div class="step-number bg-primary text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center"
+                            style="width: 50px; height: 50px;">
+                            <span class="fw-bold">2</span>
+                        </div>
+                        <h5>Set Your Priorities</h5>
+                        <p class="text-muted">Choose your top 3 preferences from hospitals, schools, connectivity,
+                            safety, and more.</p>
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <div class="step-number bg-primary text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center"
+                            style="width: 50px; height: 50px;">
+                            <span class="fw-bold">3</span>
+                        </div>
+                        <h5>Set Your Budget</h5>
+                        <p class="text-muted">Define your budget range to get recommendations that fit your financial
+                            planning.</p>
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <div class="step-number bg-primary text-white rounded-circle mb-3 mx-auto d-flex align-items-center justify-content-center"
+                            style="width: 50px; height: 50px;">
+                            <span class="fw-bold">4</span>
+                        </div>
+                        <h5>Get Recommendations</h5>
+                        <p class="text-muted">Receive top 3 personalized neighborhood recommendations with detailed
+                            analysis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section bg-primary text-white py-5">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-12">
+                        <h2 class="display-5 fw-bold mb-3">Ready to Find Your Dream Neighborhood?</h2>
+                        <p class="lead mb-4">Join thousands of users who found their perfect home with NestNav AI</p>
+                        <% if (!currentUser) { %>
+                            <a href="/register" class="btn btn-light btn-lg">
+                                <i class="fas fa-rocket me-2"></i>Start Your Search Now
+                            </a>
+                            <% } else { %>
+                                <a href="/dashboard" class="btn btn-light btn-lg">
+                                    <i class="fas fa-search me-2"></i>Search Neighborhoods
+                                </a>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('partials/footer') %>

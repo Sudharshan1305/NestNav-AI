@@ -1,0 +1,166 @@
+Location,FactoryScore,FloodRisk,FloodScore,ConnectivityScore,CrimeScore,HospitalScore,CollegeScore,MallScore,PowerScore,ServicesScore,CostScore,AvailablePlots
+Adambakkam,8,Medium,6,5,7,4,6,6,9,9,6,6
+Adyar,5,Low,9,2,6,4,4,5,5,5,3,3
+Alandur,4,Low,8,4,10,7,7,8,9,6,5,5
+Alapakkam,1,Medium,6,4,2,5,5,3,6,8,7,9
+Alwarpet,4,Low,9,1,4,9,5,5,8,9,2,2
+Alwarthirunagar,1,Low,8,3,1,5,5,6,8,5,6,6
+Ambattur,4,Medium,3,3,8,6,6,7,6,5,8,15
+Aminjikarai,10,Low,8,10,5,8,6,8,6,9,6,4
+Anna Nagar,10,Low,9,9,2,9,5,7,7,4,5,5
+Annanur,10,Medium,5,9,3,4,7,9,9,8,8,13
+Arumbakkam,6,Medium,6,9,10,9,6,4,9,5,6,4
+Ashok Nagar,7,Low,8,5,4,5,8,7,7,4,6,5
+Avadi,2,Medium,1,6,9,5,9,7,9,8,8,20
+Ayanavaram,9,Medium,6,6,8,9,5,3,9,4,7,6
+Beemannapettai,2,High,3,9,10,8,8,3,7,9,8,3
+Besant Nagar,2,Low,9,4,9,9,4,9,9,5,3,2
+Basin Bridge,6,High,2,9,7,6,7,8,9,6,9,3
+Chepauk,6,Medium,6,8,6,6,8,8,5,4,5,2
+Chetput,5,Low,3,10,2,9,4,5,7,8,4,4
+Chintadripet,10,Medium,5,7,1,5,8,6,7,6,6,3
+Chitlapakkam,2,Medium,6,3,1,6,6,4,9,7,7,12
+Choolai,7,Medium,6,9,8,6,6,6,6,5,7,3
+Choolaimedu,9,Medium,6,2,5,9,9,7,8,7,6,5
+Chrompet,3,Medium,6,10,5,9,9,8,7,9,7,14
+Egmore,6,Low,8,4,4,6,9,6,8,9,4,4
+Ekkaduthangal,1,Medium,6,2,9,8,7,4,6,5,6,5
+Eranavur,5,High,2,1,2,4,8,8,9,9,9,11
+Ennore,1,High,2,2,6,9,5,5,5,7,9,16
+Foreshore Estate,7,Medium,6,2,8,8,9,8,7,5,4,2
+Fort St. George,7,Medium,5,4,9,6,6,8,8,9,5,1
+George Town,9,High,3,1,5,4,8,9,8,7,8,2
+Gopalapuram,4,Low,9,8,8,4,6,3,7,9,3,3
+Government Estate,4,Medium,6,3,7,5,5,4,8,8,5,1
+Guindy,3,Medium,6,9,1,5,7,8,5,9,6,5
+Guduvancheri,4,Medium,6,9,10,8,7,5,8,8,9,18
+IIT Madras,5,Low,8,8,9,7,9,5,5,4,2,1
+Injambakkam,6,Medium,6,2,1,7,8,4,5,6,6,12
+ICF,1,Medium,6,2,3,5,7,5,6,8,7,5
+Iyyapanthangal,2,Medium,5,8,3,4,8,3,5,5,8,16
+Jafferkhanpet,6,Low,7,3,5,6,7,8,9,5,7,5
+Kadambathur,1,Low,7,5,8,9,5,8,6,5,10,20
+Karapakkam,9,Medium,6,9,4,7,6,5,7,6,6,14
+Kattivakkam,2,High,3,5,10,4,7,4,9,7,9,15
+Kattupakkam,3,Medium,5,8,10,6,8,4,6,9,8,13
+Kazhipattur,6,Medium,6,2,5,4,6,3,6,8,7,17
+K.K. Nagar,5,Low,9,6,9,5,5,7,9,6,5,6
+Keelkattalai,8,Medium,6,9,8,4,4,8,5,4,7,10
+Kilpauk,4,Low,9,6,3,7,8,9,8,7,4,4
+Kodambakkam,9,Medium,7,1,9,7,8,6,6,8,6,5
+Kodungaiyur,9,High,3,1,8,7,6,6,5,8,9,9
+Kolathur,9,Medium,5,1,1,5,8,5,7,6,7,10
+Korattur,10,Medium,6,4,8,7,8,9,5,6,7,8
+Korukkupet,10,High,3,4,9,9,6,6,7,4,9,5
+Kottivakkam,3,Low,8,3,5,4,4,5,7,5,4,8
+Kotturpuram,3,Low,9,2,6,8,5,3,8,8,4,4
+Kottur,8,Low,9,1,4,9,4,9,9,7,4,4
+Kovur,7,Medium,5,10,4,4,6,5,8,5,9,15
+Koyambedu,4,Medium,5,5,2,9,9,9,5,6,6,6
+Kundrathur,7,Medium,5,3,2,8,4,7,7,8,8,17
+Madhavaram,4,Medium,6,7,6,9,9,3,8,4,7,12
+Madhavaram Milk Colony,1,Medium,5,2,4,9,9,6,7,8,7,11
+Madipakkam,4,Medium,6,4,2,4,9,8,9,9,7,10
+Madambakkam,4,Medium,5,8,2,7,9,4,5,7,8,13
+Maduravoyal,6,Medium,6,8,4,7,5,8,9,8,7,11
+Manali,4,High,3,7,8,5,6,5,8,9,9,18
+Manali New Town,1,High,3,6,4,8,8,6,5,8,9,20
+Manapakkam,2,Medium,6,2,9,7,7,8,8,7,7,10
+Mandaveli,9,Low,9,6,5,7,9,3,8,8,3,3
+Mangadu,2,Medium,5,7,6,6,6,3,9,7,8,14
+Mannadi,7,High,3,9,9,8,9,9,5,6,8,2
+Mathur,10,Medium,5,10,10,8,8,3,9,8,8,14
+Medavakkam,9,Medium,6,8,5,7,5,4,8,8,6,16
+Meenambakkam,3,Medium,6,1,3,5,7,9,5,9,5,9
+MGR Nagar,4,Medium,6,10,7,9,8,6,5,8,6,5
+Minjur,4,Medium,4,2,8,5,4,3,8,9,10,20
+Mogappair,2,Low,8,10,8,4,9,4,8,7,6,10
+MKB Nagar,8,Medium,5,2,5,4,7,7,8,5,8,6
+Mount Road,10,Medium,6,7,8,7,9,7,9,4,5,2
+Moolakadai,4,High,4,10,7,8,8,7,9,7,8,8
+Moulivakkam,7,Medium,5,6,8,5,7,8,6,5,8,11
+Mugalivakkam,6,Medium,6,1,5,4,7,7,9,4,7,11
+Mudichur,5,Medium,5,3,9,5,4,9,5,4,9,17
+Mylapore,2,Low,9,8,3,8,8,8,8,5,2,2
+Nandanam,3,Low,9,7,9,5,7,8,5,7,4,4
+Nanganallur,5,Medium,6,7,6,7,9,9,5,4,6,8
+Nanmangalam,5,Medium,5,7,2,7,4,7,5,4,9,14
+Neelankarai,2,Low,8,2,1,7,8,9,6,9,4,9
+Nemilichery,6,Medium,5,2,2,9,8,7,8,7,9,13
+Nesapakkam,9,Medium,6,8,10,7,7,9,9,4,8,10
+Nolambur,7,Medium,6,10,8,5,7,4,5,8,7,9
+Noombal,7,Medium,5,6,6,8,5,5,5,6,9,12
+Nungambakkam,5,Low,9,7,8,7,5,4,9,8,4,4
+Otteri,4,Medium,5,9,5,8,8,3,9,4,8,5
+Padi,4,Medium,6,5,3,7,7,5,8,6,7,7
+Pakkam,5,Medium,5,9,6,6,8,3,8,4,9,18
+Palavakkam,10,Low,8,3,7,6,6,3,9,4,5,8
+Pallavaram,3,Medium,6,7,7,4,9,4,5,7,7,13
+Pallikaranai,6,High,4,10,9,5,8,5,8,5,6,15
+Pammal,1,Medium,5,3,2,4,5,3,5,4,8,12
+Park Town,7,Medium,6,10,7,5,5,9,6,9,6,2
+Parry's Corner,6,High,4,10,10,5,9,9,5,4,7,2
+Pattabiram,7,Medium,5,7,5,6,7,8,8,6,9,16
+Pattaravakkam,3,Medium,5,1,5,5,6,8,7,4,8,13
+Pazhavanthangal,9,Medium,6,10,10,4,7,7,6,5,7,7
+Peerkankaranai,9,Medium,5,5,9,5,5,4,8,5,9,14
+Perambur,2,Medium,6,10,3,8,6,9,6,8,7,9
+Peravallur,7,Medium,5,4,7,8,6,5,7,7,8,8
+Perumbakkam,8,High,4,1,10,5,4,9,6,5,7,15
+Perungalathur,2,Medium,6,4,1,4,7,8,5,6,8,16
+Perungudi,1,Medium,6,4,7,7,5,3,7,8,6,10
+Pozhichalur,3,Medium,5,7,1,4,7,7,7,8,9,12
+Poonamallee,9,Medium,6,9,9,5,8,4,9,5,8,17
+Porur,5,Medium,6,10,10,5,5,8,8,5,7,11
+Pudupet,2,Medium,5,3,10,7,7,7,6,9,8,3
+Pulianthope,2,High,4,4,10,4,9,9,9,7,8,4
+Purasaiwalkam,9,Low,8,6,9,6,7,7,9,6,6,5
+Puthagaram,6,Medium,5,8,9,4,8,3,8,8,8,13
+Puzhal,3,Medium,4,9,8,6,7,4,8,9,9,17
+Puzhuthivakkam-Ullagaram,3,Medium,5,2,8,4,9,7,9,6,8,10
+Raj Bhavan,7,Low,9,10,8,6,6,9,6,7,3,1
+Ramavaram,6,Medium,6,1,10,8,9,6,7,6,7,10
+Red Hills,1,Medium,5,3,9,4,6,4,8,5,9,18
+Royapettah,7,Low,8,9,8,7,7,6,9,4,4,4
+Royapuram,5,High,4,6,1,6,7,6,5,6,7,5
+Saidapet,8,Medium,6,2,8,9,4,7,9,6,5,7
+Saligramam,5,Medium,6,3,4,7,8,4,5,5,6,6
+Santhome,3,Medium,6,6,1,6,7,5,7,4,4,3
+Sembakkam,5,Medium,5,2,10,5,5,5,6,9,8,14
+Selaiyur,4,Medium,5,9,7,9,8,4,7,8,8,13
+Shenoy Nagar,9,Low,8,3,10,6,7,8,5,7,5,6
+Sholavaram,10,Medium,4,8,6,7,6,3,5,8,10,15
+Sholinganallur,2,Medium,6,1,5,8,6,4,5,5,6,18
+Sikkarayapuram,7,Medium,5,1,5,5,8,4,9,6,9,14
+Sowcarpet,9,Medium,5,2,10,5,6,9,5,5,7,3
+St. Thomas Mount,1,Medium,6,8,7,4,6,9,8,9,6,5
+Surapet,1,Medium,5,9,5,5,6,4,8,5,9,12
+Tambaram,1,Medium,6,8,1,5,9,3,9,6,7,16
+Teynampet,10,Low,9,3,1,4,5,6,5,8,3,3
+Tharamani,5,Medium,6,10,7,6,5,5,8,6,5,8
+T. Nagar,9,Low,9,3,9,5,6,8,9,8,4,3
+Thirumangalam,4,Low,8,5,6,7,9,6,8,7,5,7
+Thirumullaivoyal,2,Medium,6,8,7,8,4,7,5,8,8,13
+Thiruneermalai,1,Medium,5,5,3,8,9,7,8,4,9,15
+Thiruninravur,5,Medium,5,6,7,4,9,7,9,4,9,17
+Thiruvanmiyur,8,Low,9,9,10,4,7,8,5,7,4,6
+Thiruvallur,5,Medium,5,1,9,9,4,8,5,4,10,20
+Tiruverkadu,3,Medium,5,5,8,6,7,4,8,5,9,14
+Thiruvotriyur,2,High,3,1,7,4,4,6,9,5,8,10
+Thuraipakkam,6,Medium,6,1,3,7,9,7,9,9,6,12
+Tirusulam,5,Medium,5,3,5,6,7,8,8,8,8,9
+Tiruvallikeni,4,Medium,6,8,7,5,6,7,8,4,6,2
+Tondiarpet,2,High,3,1,8,8,4,8,8,7,8,5
+United India Colony,2,Low,8,5,7,8,8,3,8,5,5,3
+Vandalur,6,Medium,5,2,7,9,7,7,8,6,9,18
+Vadapalani,3,Medium,6,1,6,6,9,9,8,7,5,6
+Valasaravakkam,3,Medium,6,1,4,5,4,9,9,9,7,9
+Vallalar Nagar,10,High,4,4,4,4,9,8,5,6,8,4
+Vanagaram,3,Medium,6,6,5,9,8,6,9,8,8,11
+Velachery,2,Medium,6,4,8,4,6,3,7,5,6,8
+Velappanchavadi,3,Medium,5,1,1,8,7,4,7,9,8,13
+Villivakkam,3,Medium,6,4,7,6,6,8,9,7,7,9
+Virugambakkam,1,Medium,6,9,7,7,7,3,7,8,6,7
+Vyasarpadi,7,High,3,5,10,7,9,8,8,4,9,6
+Washermanpet,10,High,4,9,3,5,8,5,8,5,8,4
+West Mambalam,9,Low,9,2,9,6,4,6,8,6,4,5

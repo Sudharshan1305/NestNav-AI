@@ -1,0 +1,422 @@
+{
+    "zones": {
+        "North Chennai": {
+            "id": "north",
+            "name": "North Chennai",
+            "description": "Industrial and port area with developing residential zones",
+            "color": "#3B82F6",
+            "characteristics": [
+                "Major industrial hub",
+                "Port connectivity",
+                "Developing infrastructure",
+                "Affordable housing options"
+            ],
+            "majorAreas": [
+                "Thiruvottiyur",
+                "Manali",
+                "Madhavaram",
+                "Ambattur",
+                "Avadi",
+                "Poonamallee"
+            ],
+            "transportHubs": [
+                "Thiruvottiyur Railway Station",
+                "Avadi Railway Station",
+                "Chennai Port"
+            ],
+            "averageBudgetRange": {
+                "1BHK": {
+                    "min": 8000,
+                    "max": 15000
+                },
+                "2BHK": {
+                    "min": 12000,
+                    "max": 25000
+                },
+                "3BHK": {
+                    "min": 18000,
+                    "max": 35000
+                }
+            },
+            "zonePriorities": {
+                "affordability": 9,
+                "connectivity": 6,
+                "development": 7
+            }
+        },
+        "Central Chennai": {
+            "id": "central",
+            "name": "Central Chennai",
+            "description": "Historic commercial center with dense urban development",
+            "color": "#10B981",
+            "characteristics": [
+                "Commercial hub",
+                "Historic significance",
+                "Dense population",
+                "Excellent connectivity"
+            ],
+            "majorAreas": [
+                "T. Nagar",
+                "Anna Nagar",
+                "Kilpauk",
+                "Egmore",
+                "Purasawalkam",
+                "Chetpet"
+            ],
+            "transportHubs": [
+                "Chennai Central Railway Station",
+                "Egmore Railway Station",
+                "Anna Nagar Metro Station",
+                "Kilpauk Metro Station"
+            ],
+            "averageBudgetRange": {
+                "1BHK": {
+                    "min": 15000,
+                    "max": 30000
+                },
+                "2BHK": {
+                    "min": 25000,
+                    "max": 50000
+                },
+                "3BHK": {
+                    "min": 40000,
+                    "max": 80000
+                }
+            },
+            "zonePriorities": {
+                "connectivity": 10,
+                "amenities": 9,
+                "commercial": 10
+            }
+        },
+        "South Chennai": {
+            "id": "south",
+            "name": "South Chennai",
+            "description": "Upscale residential areas with premium amenities and IT corridor",
+            "color": "#F59E0B",
+            "characteristics": [
+                "Premium residential zones",
+                "IT corridor proximity",
+                "High-end amenities",
+                "Beach access"
+            ],
+            "majorAreas": [
+                "Adyar",
+                "Velachery",
+                "Tambaram",
+                "Pallikaranai",
+                "Sholinganallur",
+                "OMR (Old Mahabalipuram Road)"
+            ],
+            "transportHubs": [
+                "Tambaram Railway Station",
+                "Velachery Metro Station",
+                "Airport Metro Station"
+            ],
+            "averageBudgetRange": {
+                "1BHK": {
+                    "min": 18000,
+                    "max": 35000
+                },
+                "2BHK": {
+                    "min": 30000,
+                    "max": 60000
+                },
+                "3BHK": {
+                    "min": 50000,
+                    "max": 100000
+                }
+            },
+            "zonePriorities": {
+                "lifestyle": 10,
+                "safety": 9,
+                "amenities": 10
+            }
+        },
+        "West Chennai": {
+            "id": "west",
+            "name": "West Chennai",
+            "description": "Mixed residential and industrial with good connectivity",
+            "color": "#EF4444",
+            "characteristics": [
+                "Residential expansion",
+                "Industrial presence",
+                "Metro connectivity",
+                "Developing infrastructure"
+            ],
+            "majorAreas": [
+                "Porur",
+                "Vadapalani",
+                "Ashok Nagar",
+                "K.K. Nagar",
+                "Saligramam",
+                "Ramapuram"
+            ],
+            "transportHubs": [
+                "Vadapalani Metro Station",
+                "Ashok Nagar Metro Station",
+                "Porur Bus Terminus"
+            ],
+            "averageBudgetRange": {
+                "1BHK": {
+                    "min": 12000,
+                    "max": 25000
+                },
+                "2BHK": {
+                    "min": 20000,
+                    "max": 40000
+                },
+                "3BHK": {
+                    "min": 30000,
+                    "max": 60000
+                }
+            },
+            "zonePriorities": {
+                "connectivity": 8,
+                "affordability": 7,
+                "development": 8
+            }
+        },
+        "East Chennai": {
+            "id": "east",
+            "name": "East Chennai",
+            "description": "Coastal areas with mix of residential and commercial development",
+            "color": "#8B5CF6",
+            "characteristics": [
+                "Coastal proximity",
+                "Mixed development",
+                "Industrial presence",
+                "Traditional neighborhoods"
+            ],
+            "majorAreas": [
+                "Mylapore",
+                "Triplicane",
+                "Royapettah",
+                "Thousand Lights",
+                "Chepauk",
+                "Mandaveli"
+            ],
+            "transportHubs": [
+                "Chennai Beach Railway Station",
+                "Park Town Railway Station",
+                "Chepauk Metro Station"
+            ],
+            "averageBudgetRange": {
+                "1BHK": {
+                    "min": 15000,
+                    "max": 28000
+                },
+                "2BHK": {
+                    "min": 25000,
+                    "max": 45000
+                },
+                "3BHK": {
+                    "min": 35000,
+                    "max": 70000
+                }
+            },
+            "zonePriorities": {
+                "culture": 9,
+                "connectivity": 8,
+                "amenities": 8
+            }
+        }
+    },
+    "metroLines": {
+        "Blue Line": {
+            "route": "Washermenpet to Airport",
+            "stations": [
+                "Washermenpet",
+                "Mannadi",
+                "High Court",
+                "Central",
+                "Government Estate",
+                "LIC",
+                "Thousand Lights",
+                "AG-DMS",
+                "Teynampet",
+                "Nandanam",
+                "Saidapet",
+                "Little Mount",
+                "Guindy",
+                "Alandur",
+                "Nanganallur",
+                "Meenambakkam",
+                "Airport"
+            ],
+            "color": "#0066CC"
+        },
+        "Green Line": {
+            "route": "St. Thomas Mount to Puratchi Thalaivar Dr. M.G. Ramachandran Central Railway Station",
+            "stations": [
+                "St. Thomas Mount",
+                "Airport",
+                "Nanganallur",
+                "Alandur",
+                "Guindy",
+                "Little Mount",
+                "Saidapet",
+                "Nandanam",
+                "Teynampet",
+                "AG-DMS",
+                "Thousand Lights",
+                "LIC",
+                "Government Estate",
+                "Central"
+            ],
+            "color": "#00AA44"
+        }
+    },
+    "scoringWeights": {
+        "budget": 0.25,
+        "commute": 0.20,
+        "safety": 0.15,
+        "amenities": 0.15,
+        "connectivity": 0.15,
+        "environment": 0.05,
+        "lifestyle": 0.05
+    },
+    "cityLimits": {
+        "north": 13.2544,
+        "south": 12.7745,
+        "east": 80.3463,
+        "west": 80.0893
+    },
+    "preferences": {
+        "familyFriendly": {
+            "priorities": [
+                "safety",
+                "amenities",
+                "environment"
+            ],
+            "zones": [
+                "South Chennai",
+                "West Chennai"
+            ]
+        },
+        "youngProfessionals": {
+            "priorities": [
+                "connectivity",
+                "lifestyle",
+                "budget"
+            ],
+            "zones": [
+                "Central Chennai",
+                "South Chennai"
+            ]
+        },
+        "students": {
+            "priorities": [
+                "budget",
+                "connectivity",
+                "amenities"
+            ],
+            "zones": [
+                "North Chennai",
+                "Central Chennai"
+            ]
+        },
+        "seniorCitizens": {
+            "priorities": [
+                "safety",
+                "amenities",
+                "environment"
+            ],
+            "zones": [
+                "South Chennai",
+                "East Chennai"
+            ]
+        }
+    },
+    "landmarks": {
+        "educational": [
+            "IIT Madras",
+            "Anna University",
+            "Loyola College",
+            "Stella Maris College",
+            "SRM University",
+            "VIT Chennai"
+        ],
+        "healthcare": [
+            "Apollo Hospital",
+            "Fortis Malar",
+            "MIOT Hospital",
+            "Stanley Medical College",
+            "Government General Hospital"
+        ],
+        "commercial": [
+            "Express Avenue",
+            "Phoenix MarketCity",
+            "Forum Vijaya Mall",
+            "Chennai Citi Centre",
+            "Spencer Plaza"
+        ],
+        "entertainment": [
+            "Marina Beach",
+            "Elliot's Beach",
+            "VGP Universal Kingdom",
+            "MGM Dizzee World",
+            "Vandalur Zoo"
+        ]
+    },
+    "workHubs": {
+        "IT": [
+            "OMR (Old Mahabalipuram Road)",
+            "Sholinganallur",
+            "Thoraipakkam",
+            "Siruseri"
+        ],
+        "Finance": [
+            "Anna Salai",
+            "T. Nagar",
+            "Nungambakkam"
+        ],
+        "Manufacturing": [
+            "Ambattur Industrial Estate",
+            "Guindy Industrial Estate",
+            "Manali"
+        ],
+        "Government": [
+            "Secretariat",
+            "Fort St. George",
+            "High Court"
+        ]
+    },
+    "seasonalFactors": {
+        "monsoon": {
+            "floodProneAreas": [
+                "Velachery",
+                "Pallikaranai",
+                "Tambaram",
+                "Parts of OMR"
+            ],
+            "safezones": [
+                "Anna Nagar",
+                "T. Nagar",
+                "Adyar",
+                "Mylapore"
+            ]
+        },
+        "summer": {
+            "coolerAreas": [
+                "Coastal areas",
+                "Adyar",
+                "Mylapore",
+                "Marina vicinity"
+            ]
+        }
+    },
+    "developmentProjects": {
+        "ongoing": [
+            "Chennai Metro Phase 2",
+            "Peripheral Ring Road",
+            "Smart Cities Mission projects",
+            "Chennai Port expansion"
+        ],
+        "planned": [
+            "High Speed Rail connectivity",
+            "Additional Metro lines",
+            "IT corridor expansion"
+        ]
+    }
+}

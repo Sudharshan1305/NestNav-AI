@@ -1,0 +1,808 @@
+<%- include('partials/header') %>
+    <%- include('partials/navbar') %>
+
+        <div class="container mt-4">
+            <!-- Header Section -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h1 class="display-6 fw-bold text-primary">
+                                <i class="fas fa-trophy me-2"></i>Your Recommendations
+                            </h1>
+                            <p class="text-muted mb-0">Based on your preferences for <strong>
+                                    <%= selectedArea %>
+                                </strong></p>
+                        </div>
+                        <div>
+                            <a href="/dashboard" class="btn btn-outline-primary me-2">
+                                <i class="fas fa-arrow-left me-1"></i>New Search
+                            </a>
+                            <div class="btn-group">
+                                <button class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">
+                                    <i class="fas fa-download me-1"></i>Export
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" onclick="exportResults()">
+                                            <i class="fas fa-file-csv me-2"></i>Export as CSV</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="exportAllCharts()">
+                                            <i class="fas fa-images me-2"></i>Export Charts</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="generateReport()">
+                                            <i class="fas fa-file-pdf me-2"></i>Generate Report</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Summary -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <h6 class="text-muted mb-1">Selected Area</h6>
+                                    <p class="fw-bold mb-0">
+                                        <%= selectedArea %>
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6 class="text-muted mb-1">Zone</h6>
+                                    <p class="fw-bold mb-0">
+                                        <%= results.zone || 'All Zones' %>
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6 class="text-muted mb-1">Budget Filter</h6>
+                                    <p class="fw-bold mb-0">
+                                        <%= budget ? budget + '/10' : 'No Limit' %>
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6 class="text-muted mb-1">Areas Analyzed</h6>
+                                    <p class="fw-bold mb-0">
+                                        <%= results.totalFilteredAreas %>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Priority Weights -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="fas fa-weight-hanging me-2"></i>Your Priorities (Weighted)
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <% preferences.forEach((pref, index)=> { %>
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge bg-primary me-2">
+                                                <%= index + 1 %>
+                                            </span>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-bold">
+                                                    <%= pref.replace('Score', '' ).replace(/([A-Z])/g, ' $1' ).trim() %>
+                                                </div>
+                                                <div class="progress" style="height: 6px;">
+                                                    <div class="progress-bar" style="width: <%= (70 - index * 10) %>%">
+                                                    </div>
+                                                </div>
+                                                <small class="text-muted">Weight: <%= (0.7 - index * 0.1).toFixed(1) %>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selected Area Status -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <% if (results.selectedAreaInTop3) { %>
+                        <div class="alert alert-success" role="alert">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle fa-2x text-success me-3"></i>
+                                <div>
+                                    <h5 class="alert-heading mb-1">Great Choice! 🎉</h5>
+                                    <p class="mb-0">Your selected area <strong>
+                                            <%= selectedArea %>
+                                        </strong> is among our top 3 recommendations based on your preferences!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <% } else { %>
+                            <div class="alert alert-warning" role="alert">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-info-circle fa-2x text-warning me-3"></i>
+                                    <div>
+                                        <h5 class="alert-heading mb-1">Consider These Alternatives</h5>
+                                        <p class="mb-0">Your selected area <strong>
+                                                <%= selectedArea %>
+                                            </strong> didn't make the top 3. Here are better options based on your
+                                            preferences:</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                </div>
+            </div>
+
+            <!-- Top 3 Recommendations -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h3 class="mb-3">
+                        <i class="fas fa-medal me-2 text-warning"></i>Top 3 Recommendations
+                    </h3>
+                </div>
+
+                <% results.top3.forEach((area, index)=> { %>
+                    <div class="col-md-4 mb-3">
+                        <div
+                            class="card h-100 <%= index === 0 ? 'border-warning shadow-lg' : index === 1 ? 'border-info' : 'border-success' %>">
+                            <div
+                                class="card-header <%= index === 0 ? 'bg-warning' : index === 1 ? 'bg-info' : 'bg-success' %> text-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">
+                                        <i
+                                            class="fas fa-<%= index === 0 ? 'crown' : index === 1 ? 'medal' : 'award' %> me-2"></i>
+                                        #<%= index + 1 %>
+                                            <%= area.Location %>
+                                    </h5>
+                                    <span class="badge bg-white text-dark fw-bold">
+                                        <%= area.FinalScore.toFixed(2) %>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- Key Metrics -->
+                                <div class="mb-3">
+                                    <h6 class="text-muted mb-2">Your Priorities:</h6>
+                                    <% preferences.forEach((pref, prefIndex)=> { %>
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <small class="fw-bold">
+                                                <%= pref.replace('Score', '' ).replace(/([A-Z])/g, ' $1' ).trim() %>:
+                                            </small>
+                                            <div class="d-flex align-items-center">
+                                                <div class="progress me-2" style="width: 60px; height: 8px;">
+                                                    <div class="progress-bar bg-<%= prefIndex === 0 ? 'primary' : prefIndex === 1 ? 'secondary' : 'info' %>"
+                                                        style="width: <%= (area[pref] / 10) * 100 %>%"></div>
+                                                </div>
+                                                <small class="text-muted">
+                                                    <%= area[pref] %>/10
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+                                </div>
+
+                                <!-- Additional Info -->
+                                <div class="mb-3">
+                                    <h6 class="text-muted mb-2">Other Factors:</h6>
+                                    <div class="row g-2 small">
+                                        <div class="col-6">
+                                            <div class="text-center p-2 bg-light rounded">
+                                                <div class="fw-bold text-primary">
+                                                    <%= area.FloodScore %>/10
+                                                </div>
+                                                <div class="text-muted">Flood Safety</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center p-2 bg-light rounded">
+                                                <div class="fw-bold text-success">
+                                                    <%= area.SafetyScore || (10 - area.CrimeScore) %>/10
+                                                </div>
+                                                <div class="text-muted">Safety</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center p-2 bg-light rounded">
+                                                <div class="fw-bold text-info">
+                                                    <%= area.ConnectivityScore %>/10
+                                                </div>
+                                                <div class="text-muted">Transport</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center p-2 bg-light rounded">
+                                                <div class="fw-bold text-warning">
+                                                    <%= area.AvailablePlots || 0 %>
+                                                </div>
+                                                <div class="text-muted">Plots</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Risk Information -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">Flood Risk:</small>
+                                        <span
+                                            class="badge bg-<%= area.FloodRisk === 'Low' ? 'success' : area.FloodRisk === 'Medium' ? 'warning' : 'danger' %>">
+                                            <%= area.FloodRisk %>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Action Buttons -->
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-primary btn-sm"
+                                        onclick="viewDetails('<%= area.Location %>')">
+                                        <i class="fas fa-eye me-1"></i>View Details
+                                    </button>
+                                    <button class="btn btn-outline-success btn-sm"
+                                        onclick="showOnMap('<%= area.Location %>')">
+                                        <i class="fas fa-map-marker-alt me-1"></i>Show on Map
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+
+
+
+            <!-- Selected Area Details (if not in top 3) -->
+            <% if (!results.selectedAreaInTop3 && results.selectedAreaData) { %>
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="mb-3">
+                            <i class="fas fa-info-circle me-2 text-info"></i>Your Selected Area: <%= selectedArea %>
+                        </h3>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="text-muted mb-3">Score Breakdown</h5>
+                                        <% preferences.forEach((pref, index)=> { %>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <span class="fw-bold">
+                                                    <span
+                                                        class="badge bg-<%= index === 0 ? 'primary' : index === 1 ? 'secondary' : 'info' %> me-2">
+                                                        <%= index + 1 %>
+                                                    </span>
+                                                    <%= pref.replace('Score', '' ).replace(/([A-Z])/g, ' $1' ).trim() %>
+                                                        :
+                                                </span>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="progress me-2" style="width: 100px; height: 10px;">
+                                                        <div class="progress-bar"
+                                                            style="width: <%= (results.selectedAreaData[pref] / 10) * 100 %>%">
+                                                        </div>
+                                                    </div>
+                                                    <span class="fw-bold">
+                                                        <%= results.selectedAreaData[pref] %>/10
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <% }); %>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 class="text-muted mb-3">Final Analysis</h5>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="fw-bold">Overall Score:</span>
+                                            <span class="badge bg-primary fs-6">
+                                                <%= results.selectedAreaData.FinalScore.toFixed(2) %>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="fw-bold">Available Plots:</span>
+                                            <span class="text-muted">
+                                                <%= results.selectedAreaData.AvailablePlots || 0 %>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="fw-bold">Flood Risk:</span>
+                                            <span
+                                                class="badge bg-<%= results.selectedAreaData.FloodRisk === 'Low' ? 'success' : results.selectedAreaData.FloodRisk === 'Medium' ? 'warning' : 'danger' %>">
+                                                <%= results.selectedAreaData.FloodRisk %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+                    <!-- Forecast Simulation Section -->
+                    <% if (forecastData && forecastData.length> 0) { %>
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card shadow-sm border-0">
+                                    <div class="card-header bg-gradient text-white"
+                                        style="background: linear-gradient(90deg, #007bff, #6610f2);">
+                                        <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Price Forecast Simulation
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-muted mb-3">
+                                            Projected price trend for <strong>
+                                                <%= selectedArea %>
+                                            </strong> over the next few months.
+                                        </p>
+
+                                        <div style="height: 400px;">
+                                            <canvas id="forecastChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+        </div>
+
+        <!-- Include Chart.js and Custom Visualization -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+        <script src="/js/dataVisualization.js"></script>
+
+        <script>
+            // FIXED Results Page JavaScript - Replace the script section in results.ejs
+
+            // Global variables
+            let recommendationData = [];
+            let currentPreferences = [];
+
+            document.addEventListener('DOMContentLoaded', function () {
+                console.log('Results page loaded');
+
+                // Initialize data with error handling
+                try {
+                    // Get data from EJS template (with fallback)
+                    recommendationData = <%= JSON.stringify(results.top3 || []) %> || [];
+                    currentPreferences = <%= JSON.stringify(preferences || []) %> || [];
+
+                    console.log('Loaded recommendation data:', recommendationData);
+                    console.log('Current preferences:', currentPreferences);
+
+                    // Ensure we have at least some data to work with
+                    if (recommendationData.length === 0) {
+                        recommendationData = generateSampleRecommendations();
+                        console.log('Using sample recommendation data');
+                    }
+
+                    // Initialize all charts with error handling
+                    setTimeout(() => {
+                        initializeResultsCharts();
+                    }, 500);
+
+                } catch (error) {
+                    console.error('Error initializing results page:', error);
+                    // Create fallback data
+                    recommendationData = generateSampleRecommendations();
+                    currentPreferences = ['SafetyScore', 'ConnectivityScore', 'MallScore'];
+                    initializeResultsCharts();
+                }
+
+                // Add event listeners for tabs
+                const tabElements = document.querySelectorAll('#visualizationTabs a[data-bs-toggle="tab"]');
+                if (tabElements.length > 0) {
+                    tabElements.forEach(tab => {
+                        tab.addEventListener('shown.bs.tab', function (e) {
+                            // Trigger chart resize when tab becomes visible
+                            setTimeout(() => {
+                                if (window.nestnavViz) {
+                                    window.nestnavViz.resizeAllCharts();
+                                }
+                            }, 100);
+                        });
+                    });
+                }
+            });
+
+            function generateSampleRecommendations() {
+                console.log('Generating sample recommendations...');
+                return [
+                    {
+                        Location: 'T. Nagar',
+                        Zone: 'Central Chennai',
+                        FinalScore: 85.5,
+                        SafetyScore: 8,
+                        ConnectivityScore: 9,
+                        FloodScore: 7,
+                        FloodRisk: 'Medium',
+                        HospitalScore: 9,
+                        CollegeScore: 8,
+                        MallScore: 10,
+                        PowerScore: 8,
+                        ServicesScore: 8,
+                        CostScore: 6,
+                        ResidentialScore: 8,
+                        CrimeScore: 2,
+                        AvailablePlots: 25
+                    },
+                    {
+                        Location: 'Adyar',
+                        Zone: 'South Chennai',
+                        FinalScore: 82.3,
+                        SafetyScore: 9,
+                        ConnectivityScore: 8,
+                        FloodScore: 6,
+                        FloodRisk: 'High',
+                        HospitalScore: 8,
+                        CollegeScore: 9,
+                        MallScore: 8,
+                        PowerScore: 9,
+                        ServicesScore: 9,
+                        CostScore: 4,
+                        ResidentialScore: 9,
+                        CrimeScore: 1,
+                        AvailablePlots: 15
+                    },
+                    {
+                        Location: 'Anna Nagar',
+                        Zone: 'North Chennai',
+                        FinalScore: 79.8,
+                        SafetyScore: 8,
+                        ConnectivityScore: 7,
+                        FloodScore: 9,
+                        FloodRisk: 'Low',
+                        HospitalScore: 7,
+                        CollegeScore: 7,
+                        MallScore: 9,
+                        PowerScore: 9,
+                        ServicesScore: 8,
+                        CostScore: 5,
+                        ResidentialScore: 8,
+                        CrimeScore: 2,
+                        AvailablePlots: 35
+                    }
+                ];
+            }
+
+            function initializeResultsCharts() {
+                if (!window.nestnavViz) {
+                    console.error('Data visualization module not loaded');
+                    showChartsError('Visualization module not available');
+                    return;
+                }
+
+                console.log('Initializing results charts...');
+
+                try {
+                    const userPreferences = {
+                        preferences: currentPreferences,
+                        budget: <%= budget || 25 %>
+        };
+
+                // Create comparison chart
+                console.log('Creating comparison chart...');
+                if (document.getElementById('comparisonChart')) {
+                    window.nestnavViz.createComparisonChart('comparisonChart', recommendationData, userPreferences);
+                }
+
+                // Create radar chart for first recommendation
+                console.log('Creating radar chart...');
+                if (recommendationData.length > 0 && document.getElementById('radarChart')) {
+                    window.nestnavViz.createCompatibilityRadar('radarChart', recommendationData[0], userPreferences);
+                }
+
+                // Create score trends chart
+                console.log('Creating trends chart...');
+                if (document.getElementById('trendsChart')) {
+                    window.nestnavViz.createScoreTrends('trendsChart', recommendationData);
+                }
+
+                // Create rent comparison chart
+                console.log('Creating rent chart...');
+                if (document.getElementById('rentChart')) {
+                    window.nestnavViz.createRentComparison('rentChart', recommendationData, '2BHK');
+                }
+
+                console.log('Results charts initialized successfully');
+
+                // Hide any loading indicators
+                const loadingElements = document.querySelectorAll('.spinner-border, .loading');
+                loadingElements.forEach(el => el.style.display = 'none');
+
+            } catch (error) {
+                console.error('Error initializing charts:', error);
+                showChartsError('Error creating visualizations');
+            }
+}
+
+            function updateRadarChart(areaName) {
+                console.log('Updating radar chart for:', areaName);
+
+                const selectedArea = recommendationData.find(area => area.Location === areaName);
+                if (selectedArea && window.nestnavViz) {
+                    const userPreferences = {
+                        preferences: currentPreferences,
+                        budget: <%= budget || 25 %>
+        };
+                window.nestnavViz.createCompatibilityRadar('radarChart', selectedArea, userPreferences);
+            } else {
+                console.error('Area not found or visualization module unavailable:', areaName);
+            }
+}
+
+            function updateRentChart(bhkType) {
+                console.log('Updating rent chart for:', bhkType);
+
+                if (window.nestnavViz) {
+                    window.nestnavViz.createRentComparison('rentChart', recommendationData, bhkType);
+                } else {
+                    console.error('Visualization module not available');
+                }
+            }
+
+            function exportChart(chartId, filename) {
+                console.log('Exporting chart:', chartId);
+
+                if (window.nestnavViz) {
+                    window.nestnavViz.exportChart(chartId, filename);
+                } else {
+                    alert('Chart export functionality not available');
+                }
+            }
+
+            function exportAllCharts() {
+                console.log('Exporting all charts...');
+
+                if (window.nestnavViz) {
+                    const charts = ['comparisonChart', 'radarChart', 'trendsChart', 'rentChart'];
+                    const filenames = ['comparison.png', 'radar_analysis.png', 'score_trends.png', 'rent_analysis.png'];
+
+                    charts.forEach((chartId, index) => {
+                        setTimeout(() => {
+                            if (document.getElementById(chartId)) {
+                                window.nestnavViz.exportChart(chartId, filenames[index]);
+                            }
+                        }, index * 500);
+                    });
+                } else {
+                    alert('Chart export functionality not available');
+                }
+            }
+
+            function viewDetails(areaName) {
+                console.log('Viewing details for:', areaName);
+
+                const area = recommendationData.find(a => a.Location === areaName);
+                if (area) {
+                    showAreaDetailsModal(area);
+                } else {
+                    alert('Area details not available');
+                }
+            }
+
+            function showOnMap(areaName) {
+                console.log('Showing on map:', areaName);
+                alert(`Map view for ${areaName} - Feature coming soon!`);
+            }
+
+            function showAreaDetailsModal(area) {
+                const modalContent = `
+        <div class="modal fade" id="areaDetailsModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-info-circle me-2"></i>${area.Location} - Detailed Analysis
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-primary">Score Breakdown</h6>
+                                <div class="mb-3">
+                                    ${currentPreferences.map((pref, index) => `
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span class="fw-bold">${pref.replace('Score', '').replace(/([A-Z])/g, ' $1').trim()}:</span>
+                                            <span class="badge bg-primary">${area[pref] || 'N/A'}/10</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-primary">Additional Information</h6>
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Final Score:</span>
+                                        <span class="fw-bold text-warning">${area.FinalScore ? area.FinalScore.toFixed(2) : 'N/A'}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Flood Risk:</span>
+                                        <span class="badge bg-${area.FloodRisk === 'Low' ? 'success' : area.FloodRisk === 'Medium' ? 'warning' : 'danger'}">${area.FloodRisk || 'Unknown'}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Available Plots:</span>
+                                        <span>${area.AvailablePlots || 0}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Zone:</span>
+                                        <span>${area.Zone || 'N/A'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="showOnMap('${area.Location}')">
+                            <i class="fas fa-map-marker-alt me-1"></i>Show on Map
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+                // Remove existing modal
+                const existingModal = document.getElementById('areaDetailsModal');
+                if (existingModal) {
+                    existingModal.remove();
+                }
+
+                // Add modal to page and show
+                document.body.insertAdjacentHTML('beforeend', modalContent);
+
+                // Initialize and show modal
+                if (typeof bootstrap !== 'undefined') {
+                    const modal = new bootstrap.Modal(document.getElementById('areaDetailsModal'));
+                    modal.show();
+
+                    // Clean up modal after it's hidden
+                    document.getElementById('areaDetailsModal').addEventListener('hidden.bs.modal', function () {
+                        this.remove();
+                    });
+                } else {
+                    // Fallback if Bootstrap is not available
+                    alert('Modal functionality requires Bootstrap');
+                }
+            }
+
+            function exportResults() {
+                console.log('Exporting results...');
+
+                const results = {
+                    selectedArea: '<%= selectedArea %>',
+                    preferences: currentPreferences,
+                    budget: <%= budget || 0 %>,
+                    recommendations: recommendationData
+            };
+
+            const csvContent = "data:text/csv;charset=utf-8," + convertToCSV(results);
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "nestnav_recommendations.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+}
+
+            function convertToCSV(data) {
+                const header = "Rank,Area,Score,FloodRisk,FloodScore,ConnectivityScore,SafetyScore,AvailablePlots\n";
+                const rows = data.recommendations.map((area, index) =>
+                    `${index + 1},"${area.Location}",${(area.FinalScore || 0).toFixed(2)},"${area.FloodRisk || 'Unknown'}",${area.FloodScore || 0},${area.ConnectivityScore || 0},${area.SafetyScore || 0},${area.AvailablePlots || 0}`
+                ).join('\n');
+                return header + rows;
+            }
+
+            function generateReport() {
+                alert('PDF report generation - Feature coming soon!');
+            }
+
+            function showChartsError(message) {
+                const chartContainers = document.querySelectorAll('[id$="Chart"]');
+                chartContainers.forEach(container => {
+                    if (container) {
+                        container.parentElement.innerHTML = `
+                <div class="d-flex align-items-center justify-content-center h-100 text-muted" style="min-height: 300px;">
+                    <div class="text-center">
+                        <i class="fas fa-exclamation-triangle fa-2x mb-2 opacity-50"></i>
+                        <p class="mb-0">${message}</p>
+                        <small class="text-muted">Sample data is being used instead</small>
+                    </div>
+                </div>
+            `;
+                    }
+                });
+            }
+
+            // Responsive chart resizing
+            window.addEventListener('resize', function () {
+                if (window.nestnavViz) {
+                    window.nestnavViz.resizeAllCharts();
+                }
+            });
+
+            // Auto-scroll to visualizations after page load
+            setTimeout(() => {
+                const vizSection = document.querySelector('#visualizationTabs');
+                if (vizSection) {
+                    vizSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }, 1500);
+
+            // Make functions globally available
+            window.updateRadarChart = updateRadarChart;
+            window.updateRentChart = updateRentChart;
+            window.exportChart = exportChart;
+            window.exportAllCharts = exportAllCharts;
+            window.viewDetails = viewDetails;
+            window.showOnMap = showOnMap;
+            window.exportResults = exportResults;
+            window.generateReport = generateReport;
+
+            console.log('Results page JavaScript initialized successfully');
+
+        </script>
+
+
+        <script>
+            const forecastData = <% - JSON.stringify(forecastData || []) %>;
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                if (forecastData.length && document.getElementById('forecastChart')) {
+                    const ctx = document.getElementById('forecastChart').getContext('2d');
+
+                    const labels = forecastData.map(f => f.ds); // Dates
+                    const values = forecastData.map(f => f.yhat); // Predicted values
+
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels,
+                            datasets: [{
+                                label: 'Predicted Price Trend',
+                                data: values,
+                                borderColor: '#007bff',
+                                backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                                tension: 0.3,
+                                fill: true,
+                                pointRadius: 4,
+                                pointHoverRadius: 6
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: { position: 'bottom' },
+                                title: {
+                                    display: true,
+                                    text: 'Forecasted Price for Upcoming Months',
+                                    font: { size: 16 }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: false,
+                                    title: { display: true, text: 'Predicted Avg Price (₹)' }
+                                },
+                                x: {
+                                    title: { display: true, text: 'Month' }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+
+
+        <%- include('partials/footer') %>

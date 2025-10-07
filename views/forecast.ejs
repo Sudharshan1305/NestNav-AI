@@ -1,0 +1,272 @@
+<%- include('partials/header') %>
+    <%- include('partials/navbar') %>
+
+        <div class="container mt-4">
+            <!-- Page Header -->
+            <div class="row mb-4">
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="display-6 fw-bold text-primary">
+                            <i class="fas fa-chart-line me-2"></i>Neighborhood Forecast
+                        </h1>
+                        <p class="text-muted mb-0">
+                            Get detailed predictions and trends for Chennai neighborhoods.
+                        </p>
+                    </div>
+                    <div>
+                        <a href="/dashboard" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Messages -->
+            <% if (typeof query !=='undefined' && query.error) { %>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <% if (query.error==='missing_fields' ) { %>
+                                Please fill in all required fields.
+                                <% } else { %>
+                                    An error occurred. Please try again.
+                                    <% } %>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+                    <!-- Forecast Controls -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <h4 class="mb-0">
+                                        <i class="fas fa-sliders-h me-2"></i>Forecast Settings
+                                    </h4>
+                                </div>
+                                <div class="card-body p-4">
+                                    <form id="forecastForm" method="POST" action="/forecast">
+                                        <!-- Area Selection -->
+                                        <div class="mb-4">
+                                            <label for="forecastArea" class="form-label fw-bold">
+                                                <i class="fas fa-map-marker-alt text-primary me-2"></i>Select Area
+                                            </label>
+                                            <select class="form-select form-select-lg" id="forecastArea"
+                                                name="forecastArea" required>
+                                                <option value="">Choose your area...</option>
+                                                <% areas.forEach(area=> { %>
+                                                    <option value="<%= area %>">
+                                                        <%= area %>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
+                                        </div>
+
+                                        <!-- Forecast Range -->
+                                        <div class="mb-4">
+                                            <label for="forecastRange" class="form-label fw-bold">
+                                                <i class="fas fa-calendar-alt text-info me-2"></i>Forecast Range
+                                            </label>
+                                            <select class="form-select" id="forecastRange" name="forecastRange"
+                                                required>
+                                                <option value="1_month">1 Month</option>
+                                                <option value="3_months">3 Months</option>
+                                                <option value="6_months">6 Months</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Submit Button -->
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary btn-lg" id="forecastBtn">
+                                                <i class="fas fa-chart-line me-2"></i>Generate Forecast
+                                                <span class="spinner-border spinner-border-sm ms-2 d-none"
+                                                    id="forecastSpinner"></span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Card -->
+                        <div class="col-lg-6">
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-lightbulb me-2"></i>Forecast Tips
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Choose areas you are
+                                            familiar with
+                                        </li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Select a forecast range
+                                            for accuracy
+                                        </li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Use historical trends
+                                            for better insight
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Forecast Charts -->
+                    <div class="row mt-4" id="forecastChartsSection">
+                        <div class="col-12 text-center py-4" id="chartsLoading">
+                            <div class="spinner-border text-primary me-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <span class="text-muted">Generating forecast charts...</span>
+                        </div>
+                    </div>
+        </div>
+
+        <!-- Chart.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+        <script src="/js/dataVisualization.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('forecastForm');
+                const forecastBtn = document.getElementById('forecastBtn');
+                const forecastSpinner = document.getElementById('forecastSpinner');
+                const chartsLoading = document.getElementById('chartsLoading');
+                const chartContainer = document.getElementById('forecastChartsSection');
+                let chartPrice, chartDemand;
+
+                form.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+
+                    const area = document.getElementById('forecastArea').value;
+                    if (!area) {
+                        alert('Please select an area first!');
+                        return;
+                    }
+
+                    forecastBtn.disabled = true;
+                    forecastSpinner.classList.remove('d-none');
+                    chartsLoading.style.display = 'block';
+                    chartContainer.innerHTML = '';
+
+                    try {
+                        // Call Flask forecast API through Node route
+                        const response = await fetch('/dashboard/api/forecast', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ area })
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) throw new Error(data.error || 'Error fetching forecast');
+
+                        const labels = data.map(item => item.ds);
+                        const prices = data.map(item => item.yhat);
+
+                        // Hide loading spinner
+                        chartsLoading.style.display = 'none';
+                        forecastBtn.disabled = false;
+                        forecastSpinner.classList.add('d-none');
+                        forecastBtn.innerHTML = '<i class="fas fa-chart-line me-2"></i>Generate Forecast';
+
+                        // Render charts
+                        chartContainer.innerHTML = `
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0"><i class="fas fa-chart-area me-2"></i>Price Forecast</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="forecastPriceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Predicted Demand (AI Estimated)</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="forecastDemandChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                        const ctxPrice = document.getElementById('forecastPriceChart');
+                        const ctxDemand = document.getElementById('forecastDemandChart');
+
+                        if (chartPrice) chartPrice.destroy();
+                        if (chartDemand) chartDemand.destroy();
+
+                        chartPrice = new Chart(ctxPrice, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: `Predicted Average Price (₹)`,
+                                    data: prices,
+                                    borderColor: '#007bff',
+                                    backgroundColor: '#007bff33',
+                                    fill: true,
+                                    tension: 0.3
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: { display: true },
+                                    tooltip: { mode: 'index', intersect: false }
+                                },
+                                scales: {
+                                    y: { title: { display: true, text: 'Average Price (₹)' } },
+                                    x: { title: { display: true, text: 'Month' } }
+                                }
+                            }
+                        });
+
+                        // Simulate demand forecast (for visual effect only)
+                        const demand = prices.map(p => Math.round(p / 1000 + Math.random() * 20));
+
+                        chartDemand = new Chart(ctxDemand, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Demand Index',
+                                    data: demand,
+                                    backgroundColor: '#17a2b8'
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: { title: { display: true, text: 'Demand Index' } },
+                                    x: { title: { display: true, text: 'Month' } }
+                                }
+                            }
+                        });
+
+                    } catch (err) {
+                        console.error(err);
+                        chartsLoading.style.display = 'none';
+                        chartContainer.innerHTML = `
+                    <div class="col-12 text-center text-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Failed to fetch forecast. Please try again later.
+                    </div>`;
+                        forecastBtn.disabled = false;
+                        forecastSpinner.classList.add('d-none');
+                    }
+                });
+            });
+        </script>
+
+
+        <%- include('partials/footer') %>

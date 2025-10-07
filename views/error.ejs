@@ -1,0 +1,57 @@
+<%- include('partials/header') %>
+    <%- include('partials/navbar') %>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <div class="error-container">
+                        <h1 class="display-1 text-muted">
+                            <%= typeof status !=='undefined' ? status : '500' %>
+                        </h1>
+                        <h2 class="mb-4">
+                            <%= typeof title !=='undefined' ? title : 'Something went wrong!' %>
+                        </h2>
+                        <p class="lead text-muted mb-4">
+                            <%= typeof message !=='undefined' ? message
+                                : 'An unexpected error occurred while processing your request.' %>
+                        </p>
+                        <div class="mt-4">
+                            <a href="/" class="btn btn-primary me-3">
+                                <i class="fas fa-home"></i> Go Home
+                            </a>
+                            <a href="javascript:history.back()" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i> Go Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .error-container {
+                padding: 3rem 0;
+                min-height: 60vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .display-1 {
+                font-size: 6rem;
+                font-weight: bold;
+                opacity: 0.3;
+            }
+
+            @media (max-width: 768px) {
+                .display-1 {
+                    font-size: 4rem;
+                }
+
+                .error-container {
+                    padding: 2rem 0;
+                }
+            }
+        </style>
+
+        <%- include('partials/footer') %>

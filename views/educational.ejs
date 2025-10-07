@@ -1,0 +1,892 @@
+<%- include('partials/header') %>
+    <%- include('partials/navbar') %>
+
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center mb-5">
+                        <h1 class="display-5 fw-bold text-primary">
+                            <i class="fas fa-graduation-cap me-2"></i>Understanding Chennai Neighborhoods
+                        </h1>
+                        <p class="lead text-muted">Learn how our recommendation system works and understand Chennai's
+                            zones</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zone Information -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h2 class="mb-4">
+                        <i class="fas fa-map me-2 text-primary"></i>Chennai Zones Overview
+                    </h2>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="card h-100 border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-city me-2"></i>Central Zone
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Characteristics:</strong> Urban core, commercial hubs, excellent
+                                        connectivity</p>
+                                    <p><strong>Best For:</strong> Working professionals, business owners, urban
+                                        lifestyle enthusiasts</p>
+                                    <p><strong>Key Areas:</strong> T. Nagar, Anna Nagar, Mylapore, Alwarpet,
+                                        Nungambakkam</p>
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <div class="text-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                <small class="d-block">High Connectivity</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                <small class="d-block">Many Amenities</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-warning">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                <small class="d-block">Higher Cost</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card h-100 border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-home me-2"></i>South Zone
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Characteristics:</strong> IT corridors, modern infrastructure,
+                                        family-friendly</p>
+                                    <p><strong>Best For:</strong> IT professionals, families with children, modern
+                                        amenities seekers</p>
+                                    <p><strong>Key Areas:</strong> Adyar, Velachery, Pallikaranai, Guduvancheri,
+                                        Chrompet</p>
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <div class="text-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                <small class="d-block">IT Hub</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                <small class="d-block">Modern Infrastructure</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-info">
+                                                <i class="fas fa-info-circle"></i>
+                                                <small class="d-block">Growing Rapidly</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card h-100 border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-industry me-2"></i>North Zone
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Characteristics:</strong> Industrial areas, port vicinity, developing
+                                        infrastructure</p>
+                                    <p><strong>Best For:</strong> Industrial workers, budget-conscious buyers,
+                                        investment opportunities</p>
+                                    <p><strong>Key Areas:</strong> Manali, Ennore, Red Hills, Madhavaram, Kolathur</p>
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <div class="text-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                <small class="d-block">Affordable</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-info">
+                                                <i class="fas fa-info-circle"></i>
+                                                <small class="d-block">Industrial Hub</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-warning">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                <small class="d-block">Pollution Risk</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card h-100 border-warning">
+                                <div class="card-header bg-warning text-dark">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-tree me-2"></i>West Zone
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Characteristics:</strong> Suburban living, green spaces, emerging IT
+                                        corridor</p>
+                                    <p><strong>Best For:</strong> Families seeking space, nature lovers, balanced
+                                        lifestyle</p>
+                                    <p><strong>Key Areas:</strong> Porur, Poonamallee, Ambattur, Avadi, Korattur</p>
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <div class="text-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                <small class="d-block">Spacious</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                <small class="d-block">Green Areas</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-info">
+                                                <i class="fas fa-info-circle"></i>
+                                                <small class="d-block">Developing</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="card border-secondary">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-water me-2"></i>East Coast Zone
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Characteristics:</strong> Coastal living, IT parks, upscale residential
+                                        areas</p>
+                                    <p><strong>Best For:</strong> Beach lovers, IT professionals, luxury seekers</p>
+                                    <p><strong>Key Areas:</strong> Thiruvanmiyur, Sholinganallur, Palavakkam,
+                                        Injambakkam</p>
+                                    <div class="row text-center">
+                                        <div class="col-3">
+                                            <div class="text-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                <small class="d-block">Beach Access</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="text-success">
+                                                <i class="fas fa-check-circle"></i>
+                                                <small class="d-block">IT Parks</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="text-warning">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                <small class="d-block">Flood Risk</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="text-warning">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                <small class="d-block">Premium Pricing</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scoring System -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h2 class="mb-4">
+                        <i class="fas fa-calculator me-2 text-primary"></i>How Our Scoring System Works
+                    </h2>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="text-primary mb-3">Parameter Weights</h5>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>1st Priority</span>
+                                            <span class="badge bg-primary">70% weight</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>2nd Priority</span>
+                                            <span class="badge bg-secondary">60% weight</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>3rd Priority</span>
+                                            <span class="badge bg-info">50% weight</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>Other Parameters</span>
+                                            <span class="badge bg-secondary">40% weight</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h5 class="text-success mb-3">Bonus Factors</h5>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <i class="fas fa-plus text-success me-2"></i>
+                                            <strong>Available Plots:</strong> Areas with more available plots get bonus
+                                            points
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i class="fas fa-filter text-info me-2"></i>
+                                            <strong>Zone Matching:</strong> Only areas in the same zone as your
+                                            selection
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i class="fas fa-money-bill text-warning me-2"></i>
+                                            <strong>Budget Filter:</strong> Areas matching your budget preference
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parameter Guide -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h2 class="mb-4">
+                        <i class="fas fa-book me-2 text-primary"></i>Parameter Definitions
+                    </h2>
+
+                    <div class="accordion" id="parameterAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="infrastructure-heading">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#infrastructure">
+                                    <i class="fas fa-building me-2 text-primary"></i>Infrastructure Parameters
+                                </button>
+                            </h2>
+                            <div id="infrastructure" class="accordion-collapse collapse show"
+                                data-bs-parent="#parameterAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-hospital text-danger me-2"></i>Hospital Score</h6>
+                                            <p class="small">Proximity and quality of medical facilities, including
+                                                hospitals, clinics, and specialized medical centers.</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-graduation-cap text-success me-2"></i>College Score
+                                            </h6>
+                                            <p class="small">Access to educational institutions including colleges,
+                                                schools, and training centers.</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-bolt text-warning me-2"></i>Power Score</h6>
+                                            <p class="small">Electricity reliability, power cuts frequency, and overall
+                                                power infrastructure quality.</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-tools text-info me-2"></i>Services Score</h6>
+                                            <p class="small">Availability of essential services like water supply, waste
+                                                management, and municipal services.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="lifestyle-heading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#lifestyle">
+                                    <i class="fas fa-heart me-2 text-danger"></i>Lifestyle Parameters
+                                </button>
+                            </h2>
+                            <div id="lifestyle" class="accordion-collapse collapse"
+                                data-bs-parent="#parameterAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-shopping-cart text-primary me-2"></i>Mall Score</h6>
+                                            <p class="small">Access to shopping malls, entertainment complexes, and
+                                                retail centers.</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-route text-success me-2"></i>Connectivity Score</h6>
+                                            <p class="small">Public transport availability, road connectivity, and
+                                                overall transportation infrastructure.</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-home text-info me-2"></i>Residential Score</h6>
+                                            <p class="small">Family-friendly environment with low industrial activity
+                                                (inverse of Factory Score).</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-shield-alt text-warning me-2"></i>Safety Score</h6>
+                                            <p class="small">Low crime rates and overall security of the neighborhood
+                                                (inverse of Crime Score).</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="risk-heading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#risk">
+                                    <i class="fas fa-exclamation-triangle me-2 text-warning"></i>Risk & Cost Parameters
+                                </button>
+                            </h2>
+                            <div id="risk" class="accordion-collapse collapse" data-bs-parent="#parameterAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-tint text-primary me-2"></i>Flood Score</h6>
+                                            <p class="small">Flood safety rating based on elevation, drainage, and
+                                                historical flood data.</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-rupee-sign text-success me-2"></i>Cost Score</h6>
+                                            <p class="small">Overall cost of living including property prices, rent, and
+                                                daily expenses.</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-industry text-secondary me-2"></i>Factory Score</h6>
+                                            <p class="small">Industrial activity level - higher scores indicate more
+                                                industrial presence.</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-user-times text-danger me-2"></i>Crime Score</h6>
+                                            <p class="small">Crime rates and safety concerns - higher scores indicate
+                                                more crime activity.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h2 class="mb-4">
+                        <i class="fas fa-lightbulb me-2 text-warning"></i>Tips for Better Recommendations
+                    </h2>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="card bg-light h-100">
+                                <div class="card-body">
+                                    <h5 class="text-primary">
+                                        <i class="fas fa-target me-2"></i>Choose Relevant Priorities
+                                    </h5>
+                                    <ul class="small">
+                                        <li>Select priorities that matter most to your daily life</li>
+                                        <li>Consider your work location when choosing connectivity</li>
+                                        <li>Factor in family needs (schools, hospitals, safety)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card bg-light h-100">
+                                <div class="card-body">
+                                    <h5 class="text-success">
+                                        <i class="fas fa-money-bill-wave me-2"></i>Set Realistic Budget
+                                    </h5>
+                                    <ul class="small">
+                                        <li>Consider long-term costs, not just property prices</li>
+                                        <li>Factor in commute costs and time value</li>
+                                        <li>Account for area development potential</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card bg-light h-100">
+                                <div class="card-body">
+                                    <h5 class="text-info">
+                                        <i class="fas fa-map-marked me-2"></i>Explore Zone Options
+                                    </h5>
+                                    <ul class="small">
+                                        <li>Try different areas to see various zone recommendations</li>
+                                        <li>Compare similar areas across different zones</li>
+                                        <li>Consider future zone development plans</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card bg-light h-100">
+                                <div class="card-body">
+                                    <h5 class="text-warning">
+                                        <i class="fas fa-chart-line me-2"></i>Use Multiple Searches
+                                    </h5>
+                                    <ul class="small">
+                                        <li>Try different priority combinations</li>
+                                        <li>Experiment with various budget ranges</li>
+                                        <li>Compare results from multiple areas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Scenarios -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h2 class="mb-4">
+                        <i class="fas fa-users me-2 text-primary"></i>Example User Scenarios
+                    </h2>
+
+                    <div class="row g-4">
+                        <div class="col-lg-4">
+                            <div class="card border-primary h-100">
+                                <div class="card-header bg-primary text-white text-center">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-laptop-code me-2"></i>IT Professional
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h6 class="text-primary">Profile:</h6>
+                                        <p class="small">Works in OMR, values connectivity and modern amenities</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-success">Recommended Priorities:</h6>
+                                        <ol class="small">
+                                            <li>Connectivity Score</li>
+                                            <li>College Score</li>
+                                            <li>Mall Score</li>
+                                        </ol>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-info">Best Zones:</h6>
+                                        <p class="small">South Zone, East Coast Zone</p>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-warning">Budget Range:</h6>
+                                        <p class="small">6-8 (Moderate to High)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card border-success h-100">
+                                <div class="card-header bg-success text-white text-center">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-baby me-2"></i>Young Family
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h6 class="text-primary">Profile:</h6>
+                                        <p class="small">Couple with young children, prioritizes safety and education
+                                        </p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-success">Recommended Priorities:</h6>
+                                        <ol class="small">
+                                            <li>Safety Score (Residential)</li>
+                                            <li>College Score</li>
+                                            <li>Hospital Score</li>
+                                        </ol>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-info">Best Zones:</h6>
+                                        <p class="small">Central Zone, West Zone</p>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-warning">Budget Range:</h6>
+                                        <p class="small">5-7 (Moderate)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card border-info h-100">
+                                <div class="card-header bg-info text-white text-center">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-piggy-bank me-2"></i>Budget Buyer
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h6 class="text-primary">Profile:</h6>
+                                        <p class="small">First-time buyer, looking for value and growth potential</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-success">Recommended Priorities:</h6>
+                                        <ol class="small">
+                                            <li>Cost Score</li>
+                                            <li>Connectivity Score</li>
+                                            <li>Services Score</li>
+                                        </ol>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6 class="text-info">Best Zones:</h6>
+                                        <p class="small">North Zone, West Zone</p>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-warning">Budget Range:</h6>
+                                        <p class="small">3-5 (Low to Moderate)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h2 class="mb-4">
+                        <i class="fas fa-question-circle me-2 text-primary"></i>Frequently Asked Questions
+                    </h2>
+
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq1-heading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq1">
+                                    How accurate are the area scores?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Our scores are based on comprehensive data including government statistics, user
+                                    feedback,
+                                    and real-time market data. While we strive for accuracy, scores should be used as a
+                                    guideline alongside personal research and site visits.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq2-heading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq2">
+                                    Why don't I see all Chennai areas in recommendations?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Our system only recommends areas within the same zone as your selected area to
+                                    ensure
+                                    similarity in infrastructure and development patterns. This provides more relevant
+                                    and
+                                    practical recommendations for your specific needs.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq3-heading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq3">
+                                    How often is the data updated?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We update our database quarterly with the latest market trends, infrastructure
+                                    developments, and user feedback. Major infrastructure changes or new developments
+                                    are updated more frequently to ensure recommendation accuracy.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq4-heading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq4">
+                                    Can I get recommendations for investment purposes?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Absolutely! For investment purposes, we recommend focusing on Connectivity Score,
+                                    Cost Score, and areas with upcoming infrastructure projects. Consider areas with
+                                    lower current costs but high development potential for better ROI.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="card bg-gradient text-white"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="card-body text-center py-5">
+                            <h2 class="mb-3">
+                                <i class="fas fa-rocket me-2"></i>Ready to Find Your Perfect Neighborhood?
+                            </h2>
+                            <p class="lead mb-4">
+                                Use our intelligent recommendation system to discover Chennai areas that match your
+                                lifestyle and preferences.
+                            </p>
+                            <div class="d-flex flex-wrap justify-content-center gap-3">
+                                <a href="/dashboard" class="btn btn-light btn-lg px-4">
+                                    <i class="fas fa-search me-2"></i>Get Recommendations
+                                </a>
+                                <% if (!currentUser) { %>
+                                    <a href="/register" class="btn btn-outline-light btn-lg px-4">
+                                        <i class="fas fa-user-plus me-2"></i>Sign Up Free
+                                    </a>
+                                    <% } else { %>
+                                        <a href="/history" class="btn btn-outline-light btn-lg px-4">
+                                            <i class="fas fa-history me-2"></i>View History
+                                        </a>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Resources -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h2 class="mb-4">
+                        <i class="fas fa-external-link-alt me-2 text-primary"></i>Additional Resources
+                    </h2>
+
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="card text-center h-100">
+                                <div class="card-body">
+                                    <i class="fas fa-chart-bar fa-3x text-primary mb-3"></i>
+                                    <h5 class="card-title">Market Trends</h5>
+                                    <p class="card-text small">
+                                        Stay updated with Chennai real estate market trends and price movements.
+                                    </p>
+                                    <a href="#" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip"
+                                        title="Coming soon - Market analytics dashboard">
+                                        View Trends
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card text-center h-100">
+                                <div class="card-body">
+                                    <i class="fas fa-calculator fa-3x text-success mb-3"></i>
+                                    <h5 class="card-title">EMI Calculator</h5>
+                                    <p class="card-text small">
+                                        Calculate your home loan EMI and plan your budget effectively.
+                                    </p>
+                                    <a href="#" class="btn btn-outline-success btn-sm" data-bs-toggle="tooltip"
+                                        title="Coming soon - EMI calculation tool">
+                                        Calculate EMI
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card text-center h-100">
+                                <div class="card-body">
+                                    <i class="fas fa-phone fa-3x text-info mb-3"></i>
+                                    <h5 class="card-title">Expert Consultation</h5>
+                                    <p class="card-text small">
+                                        Connect with real estate experts for personalized guidance.
+                                    </p>
+                                    <a href="#" class="btn btn-outline-info btn-sm" data-bs-toggle="tooltip"
+                                        title="Coming soon - Expert consultation booking">
+                                        Book Consultation
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Sources -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="text-center mb-4">
+                                <i class="fas fa-database me-2 text-secondary"></i>Our Data Sources
+                            </h5>
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <i class="fas fa-university fa-2x text-primary"></i>
+                                        <h6 class="mt-2">Government Data</h6>
+                                        <p class="small text-muted">Chennai Corporation, Census Data</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <i class="fas fa-users fa-2x text-success"></i>
+                                        <h6 class="mt-2">User Feedback</h6>
+                                        <p class="small text-muted">Community ratings and reviews</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <i class="fas fa-satellite fa-2x text-info"></i>
+                                        <h6 class="mt-2">Satellite Data</h6>
+                                        <p class="small text-muted">Infrastructure mapping and analysis</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <i class="fas fa-chart-line fa-2x text-warning"></i>
+                                        <h6 class="mt-2">Market Research</h6>
+                                        <p class="small text-muted">Real estate trends and pricing</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Floating Help Button -->
+        <div class="position-fixed bottom-0 end-0 m-4" style="z-index: 1000;">
+            <button class="btn btn-primary rounded-circle p-3" data-bs-toggle="tooltip" data-bs-placement="left"
+                title="Need help? Contact our support team"
+                onclick="window.open('mailto:support@nestnav.com', '_blank')">
+                <i class="fas fa-question fa-lg"></i>
+            </button>
+        </div>
+
+        <!-- Back to Top Button -->
+        <button id="backToTop" class="btn btn-dark rounded-circle position-fixed bottom-0 start-0 m-4 d-none"
+            style="z-index: 999;" data-bs-toggle="tooltip" title="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+
+        <script>
+            // Back to top functionality
+            document.addEventListener('DOMContentLoaded', function () {
+                const backToTopBtn = document.getElementById('backToTop');
+
+                window.addEventListener('scroll', function () {
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.classList.remove('d-none');
+                    } else {
+                        backToTopBtn.classList.add('d-none');
+                    }
+                });
+
+                backToTopBtn.addEventListener('click', function () {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+
+                // Initialize tooltips
+                const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+
+                // Smooth scrolling for anchor links
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+
+                // Fade in animation for cards
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver(function (entries) {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, observerOptions);
+
+                // Apply fade-in animation to cards
+                document.querySelectorAll('.card').forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                    observer.observe(card);
+                });
+
+                // Progress indicator for reading
+                const progressBar = document.createElement('div');
+                progressBar.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 0%;
+                    height: 3px;
+                    background: linear-gradient(90deg, #667eea, #764ba2);
+                    z-index: 9999;
+                    transition: width 0.3s ease;
+                `;
+                document.body.appendChild(progressBar);
+
+                window.addEventListener('scroll', function () {
+                    const windowHeight = window.innerHeight;
+                    const documentHeight = document.documentElement.scrollHeight - windowHeight;
+                    const scrolled = window.pageYOffset;
+                    const progress = (scrolled / documentHeight) * 100;
+                    progressBar.style.width = progress + '%';
+                });
+            });
+        </script>
+
+        <%- include('partials/footer') %>
