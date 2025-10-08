@@ -239,22 +239,55 @@
                                     </div>
                                 </div>
 
-                                <!-- Action Buttons -->
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-outline-primary btn-sm"
-                                        onclick="viewDetails('<%= area.Location %>')">
-                                        <i class="fas fa-eye me-1"></i>View Details
-                                    </button>
-                                    <button class="btn btn-outline-success btn-sm"
-                                        onclick="showOnMap('<%= area.Location %>')">
-                                        <i class="fas fa-map-marker-alt me-1"></i>Show on Map
-                                    </button>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                     <% }); %>
             </div>
+
+
+            <!-- AI Forecast Cards for Selected Area -->
+            <% if (selectedArea) { %>
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h3 class="mb-3"><i class="fas fa-robot me-2 text-primary"></i>AI Forecasts for <%= selectedArea %></h3>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-rupee-sign me-2"></i>Price (Next 12 mo)</h6>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="miniPriceChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-cubes me-2"></i>Available Plots</h6>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="miniPlotsChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-home me-2"></i>Rental Availability</h6>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="miniRentalsChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
 
 
 
@@ -753,7 +786,7 @@
 
 
         <script>
-            const forecastData = <% - JSON.stringify(forecastData || []) %>;
+            const forecastData = <%- JSON.stringify(forecastData || []) %>;
         </script>
 
         <script>
@@ -761,23 +794,43 @@
                 if (forecastData.length && document.getElementById('forecastChart')) {
                     const ctx = document.getElementById('forecastChart').getContext('2d');
 
-                    const labels = forecastData.map(f => f.ds); // Dates
-                    const values = forecastData.map(f => f.yhat); // Predicted values
+                    const labels = forecastData.map(f => f.ds);
+                    const values = forecastData.map(f => f.yhat);
+                    const lower = forecastData.map(f => f.yhat_lower || null);
+                    const upper = forecastData.map(f => f.yhat_upper || null);
 
                     new Chart(ctx, {
                         type: 'line',
                         data: {
                             labels,
-                            datasets: [{
-                                label: 'Predicted Price Trend',
-                                data: values,
-                                borderColor: '#007bff',
-                                backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                                tension: 0.3,
-                                fill: true,
-                                pointRadius: 4,
-                                pointHoverRadius: 6
-                            }]
+                            datasets: [
+                                {
+                                    label: 'Predicted Price',
+                                    data: values,
+                                    borderColor: '#007bff',
+                                    backgroundColor: 'rgba(0, 123, 255, 0.12)',
+                                    tension: 0.3,
+                                    fill: true,
+                                    pointRadius: 3,
+                                    pointHoverRadius: 5
+                                },
+                                {
+                                    label: 'Lower Confidence',
+                                    data: lower,
+                                    borderColor: 'transparent',
+                                    backgroundColor: 'rgba(0, 123, 255, 0.08)',
+                                    fill: '+1',
+                                    pointRadius: 0
+                                },
+                                {
+                                    label: 'Upper Confidence',
+                                    data: upper,
+                                    borderColor: 'transparent',
+                                    backgroundColor: 'rgba(0, 123, 255, 0.08)',
+                                    fill: false,
+                                    pointRadius: 0
+                                }
+                            ]
                         },
                         options: {
                             responsive: true,
@@ -792,7 +845,8 @@
                             scales: {
                                 y: {
                                     beginAtZero: false,
-                                    title: { display: true, text: 'Predicted Avg Price (₹)' }
+                                    title: { display: true, text: 'Predicted Avg Price (₹)' },
+                                    ticks: { callback: (val) => '₹' + val.toLocaleString() }
                                 },
                                 x: {
                                     title: { display: true, text: 'Month' }
@@ -801,6 +855,62 @@
                         }
                     });
                 }
+            });
+        </script>
+
+        <script>
+            // Load compact AI forecasts for selected area
+            document.addEventListener('DOMContentLoaded', async () => {
+                const area = '<%= selectedArea %>';
+                if (!area) return;
+
+                const mini = (id, cfg) => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    return new Chart(el.getContext('2d'), cfg);
+                };
+
+                try {
+                    // Price mini chart (12 months)
+                    const priceResp = await fetch('/api/forecast-prices', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ area, months: 12 })
+                    });
+                    const priceJson = await priceResp.json();
+                    if (priceResp.ok && priceJson.success) {
+                        const labels = priceJson.forecast.map(d => d.ds);
+                        const data = priceJson.forecast.map(d => d.yhat);
+                        mini('miniPriceChart', { type: 'line', data: { labels, datasets: [{ label: '₹', data, borderColor: '#2563eb', backgroundColor: '#2563eb22', fill: true, tension: 0.3 }] }, options: { plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: v => '₹' + v.toLocaleString() } } } } });
+                    }
+                } catch(_) {}
+
+                try {
+                    // Plots mini chart
+                    const plotsResp = await fetch('/api/forecast-plots', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ area, months: 12 })
+                    });
+                    const plotsJson = await plotsResp.json();
+                    if (plotsResp.ok && plotsJson.success) {
+                        const labels = plotsJson.forecast.map(d => d.ds);
+                        const data = plotsJson.forecast.map(d => d.yhat);
+                        mini('miniPlotsChart', { type: 'bar', data: { labels, datasets: [{ label: 'Plots', data, backgroundColor: '#8b5cf6' }] }, options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } } });
+                    }
+                } catch(_) {}
+
+                try {
+                    // Rentals mini chart
+                    const rentResp = await fetch('/api/forecast-rentals', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ area, months: 12 })
+                    });
+                    const rentJson = await rentResp.json();
+                    if (rentResp.ok && rentJson.success) {
+                        const labels = rentJson.forecast.map(d => d.ds);
+                        const data = rentJson.forecast.map(d => d.yhat);
+                        mini('miniRentalsChart', { type: 'line', data: { labels, datasets: [{ label: 'Units', data, borderColor: '#16a34a', backgroundColor: '#16a34a22', fill: true, tension: 0.3 }] }, options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } } });
+                    }
+                } catch(_) {}
             });
         </script>
 

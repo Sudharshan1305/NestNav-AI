@@ -79,13 +79,31 @@ router.post('/recommend', isLoggedIn, async (req, res) => {
             });
         }
 
-        // 🔹 Generate forecast data for the results page
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        let base = Math.floor(Math.random() * 2000) + 5000;
-        const forecastData = months.map((month, i) => {
-            const yhat = base + (i * (Math.random() * 300 + 200));
-            return { ds: month, yhat: Math.round(yhat) };
-        });
+        // 🔹 Fetch real forecast data for the results page from AI service via internal API
+        let forecastData = [];
+        try {
+            const months = 12;
+            const resp = await fetch('http://127.0.0.1:3000/api/forecast-prices', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ area: selectedArea, months })
+            });
+            const json = await resp.json();
+            if (resp.ok && json && json.success && Array.isArray(json.forecast)) {
+                forecastData = json.forecast;
+                // Ensure labels start from current month visually (front-end safety net)
+                const nowLabel = new Date();
+                const thisMonth = new Date(nowLabel.getFullYear(), nowLabel.getMonth(), 1);
+                forecastData = forecastData.filter(item => {
+                    const [y, m] = (item.ds || '').split('-').map(n => parseInt(n, 10));
+                    if (!y || !m) return true;
+                    const d = new Date(y, m - 1, 1);
+                    return d >= thisMonth;
+                });
+            }
+        } catch (e) {
+            console.warn('Forecast fetch failed, continuing without forecast:', e.message);
+        }
 
         // 🔹 Render results page (now includes forecast data)
         res.render('results', {
@@ -126,7 +144,7 @@ router.get('/forecast', isLoggedIn, (req, res) => {
 // 🔹 Forecast API (calls Flask backend)
 router.post('/api/forecast', isLoggedIn, async (req, res) => {
     try {
-        const { area } = req.body;
+        const { area, months } = req.body;
 
         if (!area) {
             return res.status(400).json({ error: "Area is required." });
@@ -136,7 +154,7 @@ router.post('/api/forecast', isLoggedIn, async (req, res) => {
         const response = await fetch('http://127.0.0.1:5001/forecast', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ area })
+            body: JSON.stringify({ area, months: Math.max(1, Math.min(parseInt(months || 12, 10) || 12, 36)) })
         });
 
         const data = await response.json();

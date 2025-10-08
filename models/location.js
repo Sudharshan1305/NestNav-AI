@@ -157,17 +157,25 @@ class LocationModel {
 
         // Sort and get top 3
         const sorted = filteredData.sort((a, b) => b.FinalScore - a.FinalScore);
-        const top3 = sorted.slice(0, 3);
-
-        // Check if selected area is in top 3
-        const selectedAreaInTop3 = top3.some(area =>
-            area.Location.toLowerCase() === selectedArea.toLowerCase()
-        );
+        let top3 = sorted.slice(0, 3);
 
         // Get selected area data
         const selectedAreaData = filteredData.find(area =>
             area.Location.toLowerCase() === selectedArea.toLowerCase()
         );
+
+        // Guarantee user's selected area appears in Top 3 if it exists in dataset
+        let selectedAreaInTop3 = top3.some(area =>
+            area.Location.toLowerCase() === selectedArea.toLowerCase()
+        );
+
+        if (!selectedAreaInTop3 && selectedAreaData) {
+            // Replace the 3rd item if the selected area is reasonably close or regardless per requirement
+            top3[2] = selectedAreaData;
+            // Re-sort the top3 for display by score desc
+            top3 = top3.sort((a, b) => b.FinalScore - a.FinalScore);
+            selectedAreaInTop3 = true;
+        }
 
         return {
             top3,

@@ -730,7 +730,7 @@ function calculateBudgetTrends(searchHistory) {
 // ===============================
 router.post('/forecast-prices', async (req, res) => {
     try {
-        const { area } = req.body;
+        const { area, months } = req.body;
 
         if (!area) {
             return res.status(400).json({ success: false, error: "Missing 'area' field in request." });
@@ -739,7 +739,7 @@ router.post('/forecast-prices', async (req, res) => {
         console.log(`🔍 Requesting forecast for: ${area}`);
 
         // Call the Python AI service
-        const response = await axios.post('http://127.0.0.1:5001/forecast', { area });
+        const response = await axios.post('http://127.0.0.1:5001/forecast', { area, months: Math.max(1, Math.min(parseInt(months || 12, 10) || 12, 36)) });
 
         if (!response.data || response.data.error) {
             return res.status(500).json({
@@ -761,6 +761,39 @@ router.post('/forecast-prices', async (req, res) => {
             success: false,
             error: 'Failed to fetch forecast data from AI service'
         });
+    }
+});
+
+
+// New: Forecast available plots
+router.post('/forecast-plots', async (req, res) => {
+    try {
+        const { area, months } = req.body;
+        if (!area) return res.status(400).json({ success: false, error: "Missing 'area'" });
+        const response = await axios.post('http://127.0.0.1:5001/forecast_plots', { area, months: Math.max(1, Math.min(parseInt(months || 12, 10) || 12, 60)) });
+        if (!response.data || response.data.error) {
+            return res.status(500).json({ success: false, error: response.data.error || 'Plots service error' });
+        }
+        res.json({ success: true, area, forecast: response.data });
+    } catch (error) {
+        console.error('Plots forecast API error:', error.message);
+        res.status(500).json({ success: false, error: 'Failed to fetch plots forecast' });
+    }
+});
+
+// New: Forecast rental availability
+router.post('/forecast-rentals', async (req, res) => {
+    try {
+        const { area, months } = req.body;
+        if (!area) return res.status(400).json({ success: false, error: "Missing 'area'" });
+        const response = await axios.post('http://127.0.0.1:5001/forecast_rentals', { area, months: Math.max(1, Math.min(parseInt(months || 12, 10) || 12, 60)) });
+        if (!response.data || response.data.error) {
+            return res.status(500).json({ success: false, error: response.data.error || 'Rentals service error' });
+        }
+        res.json({ success: true, area, forecast: response.data });
+    } catch (error) {
+        console.error('Rentals forecast API error:', error.message);
+        res.status(500).json({ success: false, error: 'Failed to fetch rentals forecast' });
     }
 });
 
